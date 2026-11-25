@@ -37,6 +37,8 @@
     "headingSecond": "THE CODE.",
     "introductionFirst": "I'm a software engineering student who enjoys exploring new technologies, programming, and building things that are useful to people.",
     "introductionSecond": "I'm generally calm under pressure, enjoy working with others, and pay close attention to the details of what I build. I take deadlines seriously and aim to finish my work ahead of schedule.",
+    "personalNoteFirst": "I take my work seriously, but I don't take myself ",
+    "personalNoteEmphasis": "too seriously.",
     "cardsLabel": "Three ways I approach my work",
     "cards": {
       "explorer": { "title": "Explorer", "description": "Discovering new technologies" },

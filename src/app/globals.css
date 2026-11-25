@@ -623,6 +623,22 @@ a:active {
 }
 .about-introduction p { margin: 0; }
 .about-introduction p + p { margin-block-start: 1.3rem; }
+.about-personal-note {
+  max-width: 42ch;
+  margin: clamp(2rem, 3.5vw, 3rem) 0 0;
+  font-size: clamp(1.125rem, 1rem + 0.35vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.about-personal-note em {
+  font-style: normal;
+  text-decoration-color: var(--glacier-blue);
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.27em;
+}
 
 .about-artwork { min-width: 0; }
 .about-card-stage {
@@ -638,35 +654,92 @@ a:active {
   --card-lift: 0rem;
   grid-area: 1 / 1;
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 35%;
   min-width: 0;
   aspect-ratio: 0.62;
-  overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--bone) 18%, transparent);
   border-radius: 0.15rem;
-  padding: 0;
+  padding: clamp(0.75rem, 1.1vw, 1.125rem);
   background: var(--black-basalt);
   color: var(--bone);
   text-align: left;
   cursor: pointer;
   transform: translateX(var(--card-x)) translateY(var(--card-lift)) rotate(var(--card-rotation));
   transform-origin: center bottom;
-  transition: box-shadow 280ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 280ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 280ms cubic-bezier(0.23, 1, 0.32, 1);
   box-shadow: 0 1.3rem 2.6rem rgb(11 16 19 / 0.2);
 }
 .about-card:focus-visible { outline: 3px solid var(--glacier-blue); outline-offset: 6px; }
-.about-card[data-active="true"] { --card-lift: -1rem; z-index: 4; box-shadow: 0 2rem 3rem rgb(11 16 19 / 0.28); }
+.about-card-stage:has(.about-card:focus-visible) .about-card { transition-duration: 0ms; }
+.about-card[data-active="true"] { --card-lift: -1rem; --card-rotation: 0deg; z-index: 4; box-shadow: 0 2rem 3rem rgb(11 16 19 / 0.28); }
 .about-card-explorer { --card-x: -76%; --card-rotation: -8deg; z-index: 1; }
 .about-card-engineer { --card-x: 0%; --card-rotation: 0deg; z-index: 2; background: #172830; }
 .about-card-builder { --card-x: 76%; --card-rotation: 8deg; z-index: 3; background: var(--glacier-blue); color: var(--black-basalt); }
-.about-card-caption {
+.about-card-stage[data-expanded="true"] .about-card-explorer { --card-x: -86%; }
+.about-card-stage[data-expanded="true"] .about-card-builder { --card-x: 86%; }
+.about-card-art {
+  position: relative;
+  display: block;
+  flex: 1 0 auto;
+  min-block-size: 8rem;
+  overflow: clip;
+  isolation: isolate;
+}
+.about-card-art-letter {
   position: absolute;
-  inset-inline: 10%;
-  inset-block-end: 8%;
+  z-index: 2;
+  inset-block-start: -0.16em;
+  inset-inline-start: -0.09em;
+  display: block;
+  font-family: var(--font-be-vietnam-pro), sans-serif;
+  font-size: clamp(7.5rem, 11vw, 10.5rem);
+  font-weight: 900;
+  letter-spacing: -0.13em;
+  line-height: 1;
+}
+.about-card-art-form { position: absolute; display: block; }
+.about-card-art-explorer .about-card-art-letter {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--bone);
+}
+.about-card-art-explorer .about-card-art-form-one {
+  z-index: 1; width: 54%; aspect-ratio: 1; inset-block-start: 4%; inset-inline-end: -5%; border-radius: 50%; background: var(--glacier-blue);
+}
+.about-card-art-explorer .about-card-art-form-two {
+  z-index: 3; width: 88%; height: 1px; inset-block-end: 24%; inset-inline-start: 10%; background: var(--bone); transform: rotate(-16deg);
+}
+.about-card-art-explorer .about-card-art-form-three {
+  z-index: 3; width: 0.7rem; aspect-ratio: 1; inset-block-end: 11%; inset-inline-start: 10%; background: var(--glacier-blue);
+}
+.about-card-art-engineer .about-card-art-letter { inset-inline-start: 4%; color: var(--bone); }
+.about-card-art-engineer .about-card-art-form-one {
+  z-index: 3; width: 22%; height: 83%; inset-block-start: 5%; inset-inline-end: 3%; border: 1px solid var(--glacier-blue);
+}
+.about-card-art-engineer .about-card-art-form-two {
+  z-index: 3; width: 92%; height: 14%; inset-block-start: 47%; inset-inline-start: -3%; background: var(--glacier-blue);
+}
+.about-card-art-engineer .about-card-art-form-three {
+  z-index: 4; width: 38%; height: 1px; inset-block-end: 5%; inset-inline-end: 3%; background: var(--bone);
+}
+.about-card-art-builder .about-card-art-letter { inset-inline-start: 7%; color: var(--black-basalt); }
+.about-card-art-builder .about-card-art-form-one {
+  z-index: 1; width: 61%; aspect-ratio: 1; inset-block-start: 5%; inset-inline-end: -16%; background: var(--bone);
+}
+.about-card-art-builder .about-card-art-form-two {
+  z-index: 3; width: 74%; height: 12%; inset-block-start: 59%; inset-inline-start: -10%; background: var(--bone);
+}
+.about-card-art-builder .about-card-art-form-three {
+  z-index: 3; width: 25%; aspect-ratio: 1; inset-block-end: 6%; inset-inline-end: 4%; border: 2px solid var(--black-basalt);
+}
+.about-card-caption {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  min-block-size: 0;
+  border-top: 1px solid currentColor;
+  padding-block-start: 0.65rem;
 }
 .about-card-title {
   font-family: var(--font-be-vietnam-pro), sans-serif;
@@ -675,30 +748,7 @@ a:active {
   letter-spacing: -0.055em;
   line-height: 1.15;
 }
-.about-card-description { font-size: 0.875rem; line-height: 1.35; }
-.about-card-graphic { position: absolute; inset: 18% 9% 43%; display: block; }
-.about-card-graphic span { position: absolute; display: block; }
-.about-card-graphic-explorer span:first-child {
-  inset: 12% 10%; border: 1px solid var(--glacier-blue); border-radius: 50%;
-}
-.about-card-graphic-explorer span:nth-child(2) {
-  inset: 0 23%; border: 1px solid color-mix(in srgb, var(--bone) 70%, transparent); border-radius: 50%; transform: rotate(43deg);
-}
-.about-card-graphic-explorer span:last-child {
-  width: 14%; aspect-ratio: 1; inset-block-start: 13%; inset-inline-end: 8%; background: var(--glacier-blue); border-radius: 50%;
-}
-.about-card-graphic-engineer span {
-  width: 72%; height: 17%; border: 1px solid var(--glacier-blue); background: color-mix(in srgb, var(--glacier-blue) 16%, transparent);
-}
-.about-card-graphic-engineer span:first-child { inset-block-start: 15%; inset-inline-start: 8%; }
-.about-card-graphic-engineer span:nth-child(2) { inset-block-start: 38%; inset-inline-start: 18%; }
-.about-card-graphic-engineer span:last-child { inset-block-start: 61%; inset-inline-start: 28%; }
-.about-card-graphic-builder span {
-  width: 48%; height: 31%; border: 2px solid var(--black-basalt); background: var(--bone);
-}
-.about-card-graphic-builder span:first-child { inset-block-start: 3%; inset-inline-start: 2%; }
-.about-card-graphic-builder span:nth-child(2) { inset-block-start: 26%; inset-inline-start: 27%; }
-.about-card-graphic-builder span:last-child { inset-block-start: 49%; inset-inline-start: 7%; background: var(--black-basalt); }
+.about-card-description { font-size: 0.875rem; line-height: 1.4; overflow-wrap: break-word; }
 
 .about-experience { margin-block-start: clamp(5rem, 8vw, 9rem); }
 .about-experience-heading {
@@ -708,9 +758,9 @@ a:active {
 .about-experience-heading h3 {
   margin: 0;
   font-family: var(--font-be-vietnam-pro), sans-serif;
-  font-size: clamp(1.8rem, 3.4vw, 3.4rem);
-  font-weight: 900;
-  letter-spacing: -0.055em;
+  font-size: clamp(1.75rem, 2.45vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
   line-height: 1.2;
 }
 .about-pillars {
@@ -723,11 +773,11 @@ a:active {
 .about-pillar h4 {
   margin: 0;
   font-family: var(--font-be-vietnam-pro), sans-serif;
-  font-size: clamp(2rem, 3.1vw, 3.25rem);
-  font-weight: 900;
-  letter-spacing: -0.06em;
+  font-size: clamp(1.75rem, 2.15vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
   line-height: 1.14;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 .about-pillar-field { margin: 1.35rem 0 0; font-size: 1.125rem; font-weight: 700; line-height: 1.4; }
 .about-pillar-description { max-width: 31ch; margin: 0.5rem 0 0; font-size: 1rem; line-height: 1.6; }
@@ -748,10 +798,17 @@ a:active {
   .about-title:lang(vi) { font-size: clamp(2.65rem, 8.45vw, 4rem); }
   .about-introduction { margin-block-start: 2rem; font-size: 1.0625rem; }
   .about-card-stage { min-height: clamp(18rem, 83vw, 23rem); }
+  .about-card { width: 52%; padding: 0.625rem; }
+  .about-card-art { min-block-size: 6.5rem; }
+  .about-card-art-letter { font-size: clamp(6.5rem, 26vw, 8.5rem); }
+  .about-card-explorer { --card-x: -30%; }
+  .about-card-builder { --card-x: 30%; }
+  .about-card-stage[data-expanded="true"] .about-card-explorer { --card-x: -35%; }
+  .about-card-stage[data-expanded="true"] .about-card-builder { --card-x: 35%; }
   .about-card-title { font-size: clamp(1.125rem, 3.6vw, 1.3rem); }
   .about-experience { margin-block-start: 4.5rem; }
   .about-pillars { grid-template-columns: 1fr; gap: 2rem; }
-  .about-pillar h4 { font-size: clamp(2.15rem, 8vw, 3.2rem); }
+  .about-pillar h4 { font-size: clamp(1.75rem, 6.4vw, 2.25rem); }
   .about-pillar-field { margin-block-start: 1rem; }
 }
 

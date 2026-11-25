@@ -27,6 +27,10 @@ export async function About() {
               <p>{t("introductionFirst")}</p>
               <p>{t("introductionSecond")}</p>
             </div>
+            <p className="about-personal-note">
+              {t("personalNoteFirst")}
+              <em>{t("personalNoteEmphasis")}</em>
+            </p>
           </div>
 
           <AboutCards
