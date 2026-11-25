@@ -1,0 +1,11 @@
+---
+description: Commit completed project changes as recoverable checkpoints
+alwaysApply: true
+---
+
+# Version-control checkpoints
+
+- After a requested implementation or documentation change is complete and verified, create a focused local Git commit so it can be reverted.
+- Before staging, inspect Git status and exclude secrets, private content, generated output and unrelated user changes. Commit only the completed scope.
+- A current read-only or no-commit instruction takes precedence. Do not commit incomplete work merely to create a checkpoint.
+- Push only when the owner explicitly requests it in the current turn. Never force-push or deploy without separate authorization.

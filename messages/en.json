@@ -1,0 +1,195 @@
+{
+  "Metadata": {
+    "title": "Luong Khuong Duy · Software Engineering Portfolio",
+    "description": "Luong Khuong Duy is a Software Engineering student, Java backend developer, and research co-author. Explore an engineering-first portfolio."
+  },
+  "Common": {
+    "skipToContent": "Skip to content",
+    "languageSwitcher": "Change language",
+    "english": "English",
+    "vietnamese": "Vietnamese",
+    "foundationLabel": "Glacial Precision / Foundation",
+    "wordmark": "LKD.",
+    "designSystem": "Design system",
+    "developmentOnly": "Development preview"
+  },
+  "Home": {
+    "eyebrow": "Foundation / Phase P1",
+    "title": "A precise foundation for what comes next.",
+    "description": "The visual system, accessible interface primitives, and bilingual routing are ready for review. Portfolio sections remain intentionally out of scope.",
+    "previewLink": "Review the design system",
+    "previewNote": "This review route is available only while the development server is running."
+  },
+  "PosterHero": {
+    "nameFirst": "Luong",
+    "nameMiddle": "Khuong",
+    "nameLast": "Duy",
+    "roleStudent": "Software Engineering Student",
+    "roleBackend": "Java Backend Developer",
+    "roleResearch": "Research Co-author",
+    "location": "Based in Vietnam",
+    "linksLabel": "Professional profiles",
+    "replay": "Replay intro"
+  },
+  "About": {
+    "label": "About me",
+    "headingFirst": "BEHIND",
+    "headingSecond": "THE CODE.",
+    "introductionFirst": "I'm a software engineering student who enjoys exploring new technologies, programming, and building things that are useful to people.",
+    "introductionSecond": "I'm generally calm under pressure, enjoy working with others, and pay close attention to the details of what I build. I take deadlines seriously and aim to finish my work ahead of schedule.",
+    "cardsLabel": "Three ways I approach my work",
+    "cards": {
+      "explorer": { "title": "Explorer", "description": "Discovering new technologies" },
+      "engineer": { "title": "Engineer", "description": "Calm, focused, detail-oriented" },
+      "builder": { "title": "Builder", "description": "Creating useful software" }
+    },
+    "experienceTitle": "Experience & Achievements",
+    "pillars": {
+      "engineering": {
+        "title": "Engineering.",
+        "field": "Software Development",
+        "description": "Backend systems, software architecture and team leadership."
+      },
+      "innovation": {
+        "title": "Innovation.",
+        "field": "NASA Space Apps",
+        "description": "Top 10 Finalist."
+      },
+      "research": {
+        "title": "Research.",
+        "field": "Artificial Intelligence",
+        "description": "LLM Robustness · Research Co-author."
+      }
+    }
+  },
+  "Hero": {
+    "eyebrow": "HELLO, WORLD. I'M",
+    "name": "Luong Khuong Duy",
+    "nameFirst": "Luong",
+    "nameLast": "Khuong Duy",
+    "phrasePrefix": "I build",
+    "phraseReliable": "reliable systems.",
+    "phraseBackend": "backend solutions.",
+    "phraseMeaningful": "meaningful software.",
+    "roles": "Software Engineering Student · Java Backend Developer · Research Co-author",
+    "statement": "Quiet Precision. Bold Curiosity.",
+    "actionsLabel": "Portfolio actions",
+    "projectsCta": "Explore my work",
+    "projectsUnavailable": "Available when projects are published",
+    "resumeCta": "Résumé",
+    "resumeUnavailable": "Awaiting an approved public CV",
+    "bottomNote": "The journey continues soon",
+    "bottomCoordinate": "ENGINEERING / CURIOSITY"
+  },
+  "Dock": {
+    "label": "Main navigation",
+    "menu": "Open navigation",
+    "unavailable": "Coming in a later phase",
+    "home": "Home",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "about": "About",
+    "projects": "Projects",
+    "skillsResearch": "Skills and research",
+    "journey": "Journey",
+    "playground": "Playground",
+    "contact": "Contact"
+  },
+  "DesignPreview": {
+    "metadataTitle": "Design system preview",
+    "metadataDescription": "Development-only review of the Glacial Precision design foundation.",
+    "eyebrow": "Internal review / Phase P1",
+    "title": "Glacial Precision",
+    "description": "A calm, cinematic system built from basalt-dark surfaces, bone typography, and measured glacial-blue interaction.",
+    "backHome": "Back to foundation",
+    "palette": {
+      "eyebrow": "01 / Color",
+      "title": "A restrained spectrum",
+      "description": "Semantic roles keep the core palette consistent and let interaction states evolve without scattering raw color values.",
+      "items": {
+        "background": {
+          "label": "Black Basalt",
+          "usage": "Page background"
+        },
+        "surface": {
+          "label": "Primary surface",
+          "usage": "Cards and grouped content"
+        },
+        "elevated": {
+          "label": "Elevated surface",
+          "usage": "Hover and emphasis"
+        },
+        "foreground": {
+          "label": "Bone",
+          "usage": "Primary typography"
+        },
+        "muted": {
+          "label": "Muted text",
+          "usage": "Supporting information"
+        },
+        "accent": {
+          "label": "Glacier Blue",
+          "usage": "Primary interaction"
+        },
+        "border": {
+          "label": "Structural border",
+          "usage": "Dividers and controls"
+        },
+        "focus": {
+          "label": "Focus ring",
+          "usage": "Keyboard visibility"
+        }
+      }
+    },
+    "typography": {
+      "eyebrow": "02 / Typography",
+      "title": "Editorial scale, technical clarity",
+      "description": "Space Grotesk carries display moments, Be Vietnam Pro keeps long-form reading balanced, and JetBrains Mono identifies technical metadata.",
+      "displayLabel": "Display",
+      "displaySample": "Quiet precision. Bold curiosity.",
+      "sectionLabel": "Section heading",
+      "sectionSample": "Systems crafted with intent",
+      "bodyLabel": "Body",
+      "bodySample": "Clear hierarchy and generous rhythm keep the experience readable before any animation is introduced.",
+      "supportingLabel": "Supporting text",
+      "supportingSample": "Secondary context remains calm and legible.",
+      "captionLabel": "Caption",
+      "captionSample": "DESIGN FOUNDATION · P1",
+      "monoLabel": "Monospace metadata",
+      "monoSample": "locale=en · status=ready"
+    },
+    "components": {
+      "eyebrow": "03 / Primitives",
+      "title": "A small, useful interface kit",
+      "description": "Each primitive uses semantic HTML, visible focus, and shared interaction tokens.",
+      "controlsLabel": "Buttons / links",
+      "primaryButton": "Primary action",
+      "secondaryButton": "Secondary action",
+      "disabledButton": "Unavailable",
+      "iconButton": "Open quick action",
+      "textLink": "Read the implementation notes",
+      "badge": "Foundation ready",
+      "surfaceTitle": "Measured elevation",
+      "surfaceBody": "Borders carry most of the structure. Shadow and glow stay subtle enough to support, not dominate, the content."
+    },
+    "layout": {
+      "eyebrow": "04 / Layout",
+      "title": "Space with a clear purpose",
+      "description": "The container expands from four mobile columns to six tablet columns and twelve desktop columns.",
+      "compact": "Compact",
+      "comfortable": "Comfortable",
+      "spacious": "Spacious",
+      "copyWidth": "Copy stays within a readable measure while the wider grid supports editorial compositions."
+    },
+    "motion": {
+      "eyebrow": "05 / Motion",
+      "title": "Feedback before spectacle",
+      "description": "P1 uses lightweight CSS transitions only. System reduced-motion preferences collapse decorative movement and shorten feedback.",
+      "fast": "Press · 120 ms",
+      "hover": "Hover · 200 ms",
+      "standard": "Standard · 280 ms",
+      "reveal": "Reveal · 600 ms",
+      "reduced": "Reduced motion supported"
+    }
+  }
+}

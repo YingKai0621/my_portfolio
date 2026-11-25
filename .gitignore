@@ -1,0 +1,35 @@
+# Dependencies and build output
+/node_modules/
+/.next/
+/out/
+/build/
+/coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Test output
+/playwright-report/
+/test-results/
+/artifacts/
+
+# Local configuration and secrets
+.env*
+!.env.example
+/.codex/config.toml
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Personal content pending public review
+/docs/CONTENT.md
+/public/cv/
+
+# Local tooling
+/.vercel/
+/.turbo/
+/skills/
+.DS_Store
+npm-debug.log*
+__pycache__/
+*.py[cod]

@@ -1,0 +1,4 @@
+# Merge only after verifying current Codex client support and existing configuration.
+[mcp_servers.shadcn]
+command = "npx"
+args = ["shadcn@latest", "mcp"]

@@ -1,0 +1,195 @@
+{
+  "Metadata": {
+    "title": "Lương Khương Duy · Portfolio Kỹ thuật phần mềm",
+    "description": "Lương Khương Duy là sinh viên Kỹ thuật phần mềm, lập trình viên Java Backend và đồng tác giả nghiên cứu. Portfolio tập trung vào kỹ thuật phần mềm."
+  },
+  "Common": {
+    "skipToContent": "Chuyển đến nội dung",
+    "languageSwitcher": "Đổi ngôn ngữ",
+    "english": "English",
+    "vietnamese": "Tiếng Việt",
+    "foundationLabel": "Glacial Precision / Nền tảng",
+    "wordmark": "LKD.",
+    "designSystem": "Hệ thống thiết kế",
+    "developmentOnly": "Bản xem trước phát triển"
+  },
+  "Home": {
+    "eyebrow": "Nền tảng / Giai đoạn P1",
+    "title": "Một nền móng chỉn chu cho những bước tiếp theo.",
+    "description": "Hệ thống thị giác, các thành phần giao diện dễ tiếp cận và định tuyến song ngữ đã sẵn sàng để duyệt. Các phần nội dung portfolio vẫn được giữ ngoài phạm vi P1.",
+    "previewLink": "Duyệt hệ thống thiết kế",
+    "previewNote": "Trang duyệt này chỉ khả dụng khi máy chủ phát triển đang chạy."
+  },
+  "PosterHero": {
+    "nameFirst": "Lương",
+    "nameMiddle": "Khương",
+    "nameLast": "Duy",
+    "roleStudent": "Sinh viên Kỹ thuật phần mềm",
+    "roleBackend": "Lập trình viên Java Backend",
+    "roleResearch": "Đồng tác giả nghiên cứu",
+    "location": "Tại Việt Nam",
+    "linksLabel": "Hồ sơ nghề nghiệp",
+    "replay": "Xem lại hiệu ứng"
+  },
+  "About": {
+    "label": "Về tôi",
+    "headingFirst": "ĐẰNG SAU",
+    "headingSecond": "NHỮNG DÒNG CODE.",
+    "introductionFirst": "Tôi là sinh viên Kỹ thuật phần mềm, yêu thích khám phá công nghệ mới, lập trình và xây dựng những sản phẩm hữu ích.",
+    "introductionSecond": "Tôi luôn cố gắng giữ sự bình tĩnh khi giải quyết vấn đề, chú trọng từng chi tiết trong công việc và chủ động hoàn thành nhiệm vụ trước thời hạn.",
+    "cardsLabel": "Ba cách tôi tiếp cận công việc",
+    "cards": {
+      "explorer": { "title": "Khám phá", "description": "Tìm hiểu công nghệ mới" },
+      "engineer": { "title": "Kỹ sư", "description": "Bình tĩnh, tập trung, tỉ mỉ" },
+      "builder": { "title": "Kiến tạo", "description": "Xây dựng phần mềm hữu ích" }
+    },
+    "experienceTitle": "Kinh nghiệm & Thành tựu",
+    "pillars": {
+      "engineering": {
+        "title": "Kỹ thuật.",
+        "field": "Phát triển phần mềm",
+        "description": "Hệ thống backend, kiến trúc phần mềm và dẫn dắt nhóm."
+      },
+      "innovation": {
+        "title": "Đổi mới.",
+        "field": "NASA Space Apps",
+        "description": "Lọt Top 10 vòng chung kết."
+      },
+      "research": {
+        "title": "Nghiên cứu.",
+        "field": "Trí tuệ nhân tạo",
+        "description": "Kiểm thử độ bền vững của LLM · Đồng tác giả nghiên cứu."
+      }
+    }
+  },
+  "Hero": {
+    "eyebrow": "XIN CHÀO, MÌNH LÀ",
+    "name": "Lương Khương Duy",
+    "nameFirst": "Lương",
+    "nameLast": "Khương Duy",
+    "phrasePrefix": "Mình xây dựng",
+    "phraseReliable": "hệ thống đáng tin cậy.",
+    "phraseBackend": "giải pháp backend.",
+    "phraseMeaningful": "phần mềm có ý nghĩa.",
+    "roles": "Sinh viên Kỹ thuật phần mềm · Lập trình viên Java Backend · Đồng tác giả nghiên cứu",
+    "statement": "Tỉ mỉ trong từng chi tiết. Táo bạo trong khám phá.",
+    "actionsLabel": "Thao tác portfolio",
+    "projectsCta": "Khám phá dự án",
+    "projectsUnavailable": "Sẽ khả dụng khi dự án được đăng tải",
+    "resumeCta": "Hồ sơ năng lực",
+    "resumeUnavailable": "Đang chờ CV công khai được duyệt",
+    "bottomNote": "Hành trình sẽ tiếp tục sớm thôi",
+    "bottomCoordinate": "KỸ THUẬT / TÒ MÒ"
+  },
+  "Dock": {
+    "label": "Điều hướng chính",
+    "menu": "Mở điều hướng",
+    "unavailable": "Sẽ có ở giai đoạn sau",
+    "home": "Trang chủ",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "about": "Giới thiệu",
+    "projects": "Dự án",
+    "skillsResearch": "Kỹ năng và nghiên cứu",
+    "journey": "Hành trình",
+    "playground": "Không gian thử nghiệm",
+    "contact": "Liên hệ"
+  },
+  "DesignPreview": {
+    "metadataTitle": "Bản xem trước hệ thống thiết kế",
+    "metadataDescription": "Trang duyệt nội bộ cho nền tảng thiết kế Glacial Precision.",
+    "eyebrow": "Duyệt nội bộ / Giai đoạn P1",
+    "title": "Glacial Precision",
+    "description": "Một hệ thống điềm tĩnh, giàu chất điện ảnh với bề mặt tối như đá bazan, chữ màu xương và tương tác xanh băng được tiết chế.",
+    "backHome": "Về trang nền tảng",
+    "palette": {
+      "eyebrow": "01 / Màu sắc",
+      "title": "Dải màu có chủ đích",
+      "description": "Các vai trò ngữ nghĩa giữ bảng màu cốt lõi nhất quán và giúp trạng thái tương tác phát triển mà không rải rác giá trị màu thô.",
+      "items": {
+        "background": {
+          "label": "Đen Bazan",
+          "usage": "Nền trang"
+        },
+        "surface": {
+          "label": "Bề mặt chính",
+          "usage": "Thẻ và nhóm nội dung"
+        },
+        "elevated": {
+          "label": "Bề mặt nâng",
+          "usage": "Di chuột và nhấn mạnh"
+        },
+        "foreground": {
+          "label": "Màu Xương",
+          "usage": "Chữ chính"
+        },
+        "muted": {
+          "label": "Chữ phụ",
+          "usage": "Thông tin hỗ trợ"
+        },
+        "accent": {
+          "label": "Xanh Băng",
+          "usage": "Tương tác chính"
+        },
+        "border": {
+          "label": "Đường viền cấu trúc",
+          "usage": "Đường phân cách và điều khiển"
+        },
+        "focus": {
+          "label": "Viền lấy nét",
+          "usage": "Hiển thị bàn phím"
+        }
+      }
+    },
+    "typography": {
+      "eyebrow": "02 / Kiểu chữ",
+      "title": "Tỷ lệ biên tập, độ rõ kỹ thuật",
+      "description": "Space Grotesk tạo điểm nhấn hiển thị, Be Vietnam Pro cân bằng nội dung dài và JetBrains Mono nhận diện siêu dữ liệu kỹ thuật.",
+      "displayLabel": "Tiêu đề lớn",
+      "displaySample": "Tỉ mỉ trong từng chi tiết. Táo bạo trong khám phá.",
+      "sectionLabel": "Tiêu đề phần",
+      "sectionSample": "Hệ thống được hoàn thiện có chủ đích",
+      "bodyLabel": "Nội dung chính",
+      "bodySample": "Phân cấp rõ ràng và nhịp điệu thoáng giúp trải nghiệm dễ đọc ngay cả trước khi bổ sung hiệu ứng chuyển động.",
+      "supportingLabel": "Nội dung hỗ trợ",
+      "supportingSample": "Ngữ cảnh phụ vẫn nhẹ nhàng và dễ đọc.",
+      "captionLabel": "Chú thích",
+      "captionSample": "NỀN TẢNG THIẾT KẾ · P1",
+      "monoLabel": "Siêu dữ liệu đơn cách",
+      "monoSample": "locale=vi · status=sẵn-sàng"
+    },
+    "components": {
+      "eyebrow": "03 / Thành phần",
+      "title": "Bộ giao diện nhỏ gọn và hữu ích",
+      "description": "Mỗi thành phần dùng HTML ngữ nghĩa, trạng thái lấy nét rõ ràng và token tương tác dùng chung.",
+      "controlsLabel": "Nút / liên kết",
+      "primaryButton": "Hành động chính",
+      "secondaryButton": "Hành động phụ",
+      "disabledButton": "Chưa khả dụng",
+      "iconButton": "Mở thao tác nhanh",
+      "textLink": "Đọc ghi chú triển khai",
+      "badge": "Nền tảng sẵn sàng",
+      "surfaceTitle": "Độ nổi vừa đủ",
+      "surfaceBody": "Đường viền đảm nhiệm phần lớn cấu trúc. Bóng và ánh sáng được tiết chế để hỗ trợ thay vì lấn át nội dung."
+    },
+    "layout": {
+      "eyebrow": "04 / Bố cục",
+      "title": "Khoảng thở có mục đích",
+      "description": "Khung nội dung mở rộng từ bốn cột trên di động lên sáu cột trên máy tính bảng và mười hai cột trên desktop.",
+      "compact": "Gọn",
+      "comfortable": "Thoải mái",
+      "spacious": "Rộng rãi",
+      "copyWidth": "Nội dung chữ được giữ trong độ rộng dễ đọc, trong khi lưới lớn hơn hỗ trợ bố cục mang tính biên tập."
+    },
+    "motion": {
+      "eyebrow": "05 / Chuyển động",
+      "title": "Phản hồi trước, trình diễn sau",
+      "description": "P1 chỉ dùng chuyển tiếp CSS nhẹ. Tùy chọn giảm chuyển động của hệ thống sẽ loại bỏ chuyển động trang trí và rút ngắn phản hồi.",
+      "fast": "Nhấn · 120 ms",
+      "hover": "Di chuột · 200 ms",
+      "standard": "Tiêu chuẩn · 280 ms",
+      "reveal": "Xuất hiện · 600 ms",
+      "reduced": "Hỗ trợ giảm chuyển động"
+    }
+  }
+}
