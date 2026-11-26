@@ -9,8 +9,8 @@ All 13 owner-selected components retained as candidates. Priority describes impl
 | C003 | [Layout Text Flip](https://ui.aceternity.com/components/layout-text-flip) | Hero subtitle | A; short locale-specific phrases, reserve space, pause/disable motion |
 | C004 | [Squiggly Text](https://ui.aceternity.com/components/squiggly-text) | Beyond Engineering | B; one short personal note, never body copy |
 | C005 | [Floating Dock](https://ui.aceternity.com/components/floating-dock) | Global navigation | A; active anchors, labels, keyboard, touch and safe area |
-| C006 | [Apple Cards Carousel](https://ui.aceternity.com/components/apple-cards-carousel) | Work | A; real project cards, direct accessible detail links, no auto-scroll |
-| C007 | [Following Pointer](https://ui.aceternity.com/components/following-pointer) | Work thumbnails | B; view case study label, fine-pointer only, do not hide native affordances |
+| C006 | [Apple Cards Carousel](https://ui.aceternity.com/components/apple-cards-carousel) | Future case-study screenshot galleries | P4 installed/adapted component is retained in source, but removed from the main Selected Works composition after owner review; real screenshots are still pending |
+| C007 | [Following Pointer](https://ui.aceternity.com/components/following-pointer) | Work artwork | P4 installed/adapted with localized label on fine mouse pointers only; native links remain visible and usable on keyboard/touch and under reduced motion |
 | C008 | [Pointer Highlight](https://ui.aceternity.com/components/pointer-highlight) | About | B; highlight one philosophy phrase |
 | C009 | [Fey Cards](https://ui.aceternity.com/labs/fey-cards) | About | B/Labs; official five-image demo is available, but P3 adapts its fan-out interaction into three original graphic posters (Explorer, Engineer, Builder) with keyboard/touch and reduced-motion support; no demo imagery copied |
 | C010 | [GTA VI Poster](https://ui.aceternity.com/labs/gta-vi-poster) | Optional cinematic replay / Beyond | C/Labs; original layered portrait assets, no game IP, no blocking intro |

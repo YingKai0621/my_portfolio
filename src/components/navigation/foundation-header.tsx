@@ -17,6 +17,10 @@ export async function FoundationHeader() {
         >
           {t("wordmark")}
         </Link>
+        <nav className="identity-nav" aria-label={t("sectionNavigation")}>
+          <Link href="/#about">{t("navAbout")}</Link>
+          <Link href="/#work">{t("navWork")}</Link>
+        </nav>
         <Suspense fallback={<LocaleSwitcherFallback />}>
           <LocaleSwitcher />
         </Suspense>

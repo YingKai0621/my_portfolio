@@ -10,7 +10,7 @@ Approved workflow update (2026-11-25): P0–P10 use TypeScript type checking and
 | P1 | tokens, typography, base grid, i18n, metadata shell, placeholders, accessible primitives | /en and /vi routes, switcher, correct lang, no overflow; sample typography in both languages |
 | P2 | Hero and navigation; V3 replaces the rejected original Hero with a personal poster while preserving the official Isometric Cubes, and hides the dock until destinations exist | owner manually reviews desktop/mobile, both locales, links, replay and reduced motion before P3; screenshots if existing tooling is available |
 | P3 | Editorial About with three identity posters and “Experience & Achievements” capability pillars; C008 optional, C009 interaction adapted to owner content | owner reviews both locales, desktop/mobile composition, factual copy, keyboard/touch behavior; no general-introduction GPA, endpoint counts or number ticker |
-| P4 | Work rail and two case-study routes, C006/C007 | correct role/data, no invented repos/screens, keyboard and mobile navigation |
+| P4 | Vertically stacked editorial work rows and two case-study routes; retain C006 for future screenshot galleries, scope C007 to artwork | correct role/data, no invented repos/screens, keyboard and mobile navigation |
 | P5 | Research and Skills, optional icon/beam | accurate acceptance status and metric semantics; readable without animation |
 | P6 | Timeline, achievements, C011 if assets available | dates and awards accurate; no fabricated certificate images |
 | P7 | Beyond, optional genuine Playground, C004/C013 | small meaningful interaction or omit; accessible feedback |

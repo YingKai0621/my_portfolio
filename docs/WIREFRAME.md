@@ -7,7 +7,7 @@ Desktop: persistent minimal header (monogram left, language switch right). The d
 | Hero #home (P2 V3) | poster composition: canvas-wide uppercase name balanced within the frame, empty reserved portrait layer, verified role/location lower left, GitHub/LinkedIn lower right, Isometric Cubes across the background; replay unobtrusive at upper right | name breaks into three lines, no placeholder portrait, role text and real links remain readable and touch-accessible; no blocking viewport |
 | About #about | 6/6 story and Fey-inspired identity cards with portrait placeholder; philosophy highlight | stacked text then cards; tap or static reveal |
 | Impact | 3–4-column metric cards with explicit context | 2 columns or 1 on narrow screens |
-| Work #work | two featured cards, Apple-style rail with arrows and direct links | stacked or accessible horizontal rail with visible controls |
+| Work #work | two spacious editorial rows, artwork at left (about 60%) and project information at right, separated by subtle rules; direct case-study links | each artwork stacks above its corresponding information; no horizontal carousel |
 | Research #research | paper title/status, diagram of evaluation pipeline, result range with caveats | readable single column; diagram scroll or text alternative |
 | Skills #skills | grouped backend/database/tools/languages, optional cloud/beam illustration | grouped text badges; no dependence on animation |
 | Journey #journey | chronology and achievements, images badge when assets exist | vertical list with readable dates |

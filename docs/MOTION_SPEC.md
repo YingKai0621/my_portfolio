@@ -8,7 +8,7 @@ Motion should feel calm, deliberate and responsive. Prefer transform/opacity and
 | Dock | pointer proximity magnification, anchor navigation, active section change | keyboard and touch equal functionality, scroll offsets, no hover-only navigation |
 | About | one-time reveal on entry; fanned cards on hover/focus/tap | accessible role labels, visible description independent of cards |
 | Impact | count once when in view, final value always available to assistive tech | no rapid live announcements; no animation of unverified values |
-| Projects | cards slide with user scroll/arrows; pointer label on mouse; optional dialog | no autoplay; standard route navigation accessible; native focus |
+| Projects | static editorial rows; Following Pointer label appears only over artwork for fine mouse pointers | no carousel movement in the main showcase; native case-study links remain keyboard/touch accessible |
 | Research/Skills | subtle reveal; optional animated beam as decorative illustration | textual equivalent, no continuous loops required |
 | Journey | timeline progress on scroll; badge expansion on action | semantic chronological list always readable |
 | Lab | genuine user-triggered interaction; Comic Text success feedback | no surprise sound, no strobing |
