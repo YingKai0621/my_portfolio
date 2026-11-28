@@ -993,6 +993,17 @@ html[lang="vi"] .cinematic-behind-title { font-size: clamp(3.4rem, 5.55vw, 6.1re
 .cinematic-inspector input { flex: 1; accent-color: var(--glacier-blue); }
 .cinematic-inspector select { background: #121c22; color: var(--bone); min-block-size: 2.75rem; }
 .cinematic-inspector :focus-visible { outline: 2px solid #70d9f4; outline-offset: 3px; }
+.cinematic-opening.is-neutral-inspection::after,
+.cinematic-opening.is-neutral-inspection .cinematic-atmosphere,
+.cinematic-opening.is-neutral-inspection .cinematic-phase-field,
+.cinematic-opening.is-neutral-inspection .cinematic-beams,
+.cinematic-opening.is-neutral-inspection .cinematic-graphic-bands,
+.cinematic-opening.is-neutral-inspection .cinematic-pixel-field,
+.cinematic-opening.is-neutral-inspection .cinematic-dither,
+.cinematic-opening.is-neutral-inspection .cinematic-ghosts,
+.cinematic-opening.is-neutral-inspection .cinematic-chapter,
+.cinematic-opening.is-neutral-inspection .cinematic-scroll-cue,
+.cinematic-opening.is-neutral-inspection .cinematic-skip { display: none !important; }
 @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
   .cinematic-chapter-transformation h2 { font-size: clamp(3.5rem, 5vw, 5.8rem); }
   .cinematic-chapter-transformation .cinematic-chapter-content { justify-content: flex-end; padding-block-end: 12svh; }
@@ -1099,6 +1110,7 @@ html[lang="vi"] .cinematic-behind-title { font-size: clamp(3.4rem, 5.55vw, 6.1re
 }
 @media (prefers-reduced-motion: reduce) {
   .cinematic-opening { min-block-size: calc(100svh - 5rem); block-size: auto; overflow: visible; }
+  .cinematic-chapter-about h2 { transform: translateZ(0); }
   .cinematic-atmosphere,
   .cinematic-phase-field,
   .cinematic-beams,

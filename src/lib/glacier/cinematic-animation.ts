@@ -1,16 +1,18 @@
-import { Quaternion, Vector3 } from "three";
+import { Quaternion, Vector3, type Object3D } from "three";
 import type { loadGlacierCharacter } from "./character";
 import { ramp } from "./cinematic-shot-plan";
 
 export type CinematicRig = Pick<Awaited<ReturnType<typeof loadGlacierCharacter>>, "root" | "mixer" | "clips">;
 const zAxis = new Vector3(0, 0, 1);
+const torsoAxis = new Vector3(1, 0, 0);
 const turn = new Quaternion();
 type PoseTrack = { bone: NonNullable<ReturnType<CinematicRig["root"]["getObjectByName"]>>; open: Quaternion; closed: Quaternion };
-const poses = new WeakMap<CinematicRig, PoseTrack[]>();
+type RigPose = { fingers: PoseTrack[]; baseRotations: Map<Object3D, Quaternion> };
+const poses = new WeakMap<CinematicRig, RigPose>();
 
 // Build presents the right hand at 75%, then lowers it. Hold that presentation
 // while retiming only its real finger tracks; no invented animation names.
-function handPoses(rig: CinematicRig) {
+function rigPose(rig: CinematicRig) {
   const saved = poses.get(rig);
   if (saved) return saved;
   const clip = rig.clips.build.clip;
@@ -30,11 +32,23 @@ function handPoses(rig: CinematicRig) {
     }
     result.push({ bone, open, closed });
   }
-  poses.set(rig, result);
-  return result;
+  const baseRotations = new Map<Object3D, Quaternion>();
+  for (const { bone } of result) baseRotations.set(bone, bone.quaternion.clone());
+  for (const name of ["Head_Jt", "Neck_Jt", "Spine_1_Jt", "Spine_2_Jt"]) {
+    const bone = rig.root.getObjectByName(name);
+    if (bone) baseRotations.set(bone, bone.quaternion.clone());
+  }
+  const state = { fingers: result, baseRotations };
+  poses.set(rig, state);
+  return state;
 }
 
-export function sampleCinematicAnimation(rig: CinematicRig, p: number) {
+export function sampleCinematicAnimation(rig: CinematicRig, p: number, originalClipsOnly = false) {
+  const pose = rigPose(rig);
+  // PropertyMixer skips binding.setValue when its two accumulation buffers are
+  // equal. Restore our last animation-only values before every mixer sample,
+  // so a repeated seek cannot multiply offsets into the previous pose.
+  for (const [bone, base] of pose.baseRotations) bone.quaternion.copy(base);
   const activation = ramp(p, .0625, .08);
   const building = ramp(p, .175, .19);
   const falling = ramp(p, .64, .66);
@@ -68,20 +82,44 @@ export function sampleCinematicAnimation(rig: CinematicRig, p: number) {
     action.time = Math.min(clip.duration - .001, times[name]);
   }
   rig.mixer.update(0);
-  const gesture = ramp(p, .455, .485) * (1 - ramp(p, .592, .635));
-  const closure = ramp(p, .505, .578);
-  for (const pose of handPoses(rig)) {
-    turn.copy(pose.open).slerp(pose.closed, closure);
-    pose.bone.quaternion.slerp(turn, gesture);
+  for (const [bone, base] of pose.baseRotations) base.copy(bone.quaternion);
+  if (originalClipsOnly) {
+    rig.root.updateMatrixWorld(true);
+    return;
   }
-  // Mixer sampling restores the base every seek. Pitch only articulated joints.
-  const pitch = .20 * ramp(p, .195, .25) - .40 * ramp(p, .335, .41) + .38 * ramp(p, .485, .565);
-  const articulation = ramp(p, .19, .22) * (1 - ramp(p, .59, .65));
-  for (const [name, share] of [["Head_Jt", .72], ["Neck_Jt", .28]] as const) {
+  const gesture = ramp(p, .51, .535) * (1 - ramp(p, .642, .67));
+  const closure = ramp(p, .57, .625);
+  for (const finger of pose.fingers) {
+    turn.copy(finger.open).slerp(finger.closed, closure);
+    finger.bone.quaternion.slerp(turn, gesture);
+  }
+  // Local +Z is the measured left/right pitch axis for Head_Jt and Neck_Jt.
+  // The two bounded joint envelopes have a combined maximum below 14 degrees.
+  const up = ramp(p, .19, .25);
+  const down = ramp(p, .325, .395);
+  const lift = ramp(p, .55, .61);
+  const articulation = 1 - ramp(p, .625, .66);
+  const headPitch = Math.max(-.14, Math.min(.18, .14 * up - .28 * down + .32 * lift)) * articulation;
+  const neckPitch = Math.max(-.04, Math.min(.055, .045 * up - .085 * down + .095 * lift)) * articulation;
+  for (const [name, pitch] of [["Head_Jt", headPitch], ["Neck_Jt", neckPitch]] as const) {
     const bone = rig.root.getObjectByName(name);
-    if (bone) bone.quaternion.multiply(turn.setFromAxisAngle(zAxis, pitch * articulation * share));
+    if (bone) bone.quaternion.multiply(turn.setFromAxisAngle(zAxis, pitch));
+  }
+  // The root supplies the turn; a restrained upper-body lead and release keep
+  // the hips and shoulder animation from reading as a rigid turntable spin.
+  const torsoLead = .11 * ramp(p, .365, .415) * (1 - ramp(p, .47, .515));
+  const torsoRelease = -.085 * ramp(p, .49, .535) * (1 - ramp(p, .565, .6));
+  for (const [name, scale] of [["Spine_1_Jt", .6], ["Spine_2_Jt", .4]] as const) {
+    const bone = rig.root.getObjectByName(name);
+    if (bone) bone.quaternion.multiply(turn.setFromAxisAngle(torsoAxis, (torsoLead + torsoRelease) * scale));
   }
   rig.root.updateMatrixWorld(true);
+}
+
+export function sampleRootYaw(p: number) {
+  // The model faces +Z. Turning toward -Z exposes its back to the front-side
+  // camera; all angles are sampled directly from scroll progress.
+  return 2.62 * ramp(p, .39, .465) * (1 - ramp(p, .50, .56));
 }
 
 export function sampleRootPosition(p: number, target: Vector3) {

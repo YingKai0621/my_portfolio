@@ -26,9 +26,13 @@ H2 direction change (2026-11-27): the P7 Project Glacier homepage section is tem
 | P10 | responsive polish, accessibility, i18n and performance audit | 320/390/768/1024/1440px reviews, keyboard/reduced-motion checks; revisit P5 cloud and P6 zipper pacing/frame stability, viewport resize, pin release and manual touch behavior; no broken UI, document lab measurements |
 | P11 | install/configure Playwright and required browsers; run automated E2E checks; final production build, SEO/social previews, link audit and deployment plan | verify locales, navigation, project routes, P5 cloud/P6 zipper fallback, reduced motion and mobile behavior with automated tests; owner approves public copy/assets/privacy; deployment only on separate authorization |
 
-## H2.7 — current visual review gate
+## H2.7 — prior visual review gate
 
 Unified P2/P3 only: 28-viewport choreography, articulated look-up/down and right-hand grip, original aura, deeper close-up, gesture-linked luminous architecture, two deterministic afterimages, actual descent/contact and camera recoil; integrated About reading intervals with no SYSTEMS collision. Development inspector: `?cinematicDebug=1`. See `H2_7_CHOREOGRAPHY_REVIEW.md` for reference timestamps, checks and limitations. Owner visual approval, real-device motion quality, detailed grip/contact and model public-use rights remain pending. P4–P6 preserved; P7 suspended; no P8, Playwright, build, commit, push or deploy.
+
+## H2.8A + H2.8B — current visual review gate
+
+Correct additive head/neck accumulation using saved animation-only joint quaternions; sample the 19 controlled joints deterministically across repeated and reverse seeks. Add a measured 150° root/body turn, stable rear hold, front-side orbital camera path and slower head/hand beats within the existing 28-viewport span. Development-only neutral/source inspection modes and local review frames support owner approval. See `H2_8_ANIMATION_REVIEW.md`. No additional effects or P4–P6 changes; P7 suspended, P8 not started. Playwright/E2E **DEFERRED** to P11; no build/commit/push/deploy for this review.
 
 ## Review report template
 - Phase and scope completed

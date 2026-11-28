@@ -1,6 +1,6 @@
 import { AnimationMixer, Mesh, MeshBasicMaterial, Scene, SkinnedMesh } from "three";
 import { clone } from "three/addons/utils/SkeletonUtils.js";
-import { sampleCinematicAnimation, sampleRootPosition, type CinematicRig } from "./cinematic-animation";
+import { sampleCinematicAnimation, sampleRootPosition, sampleRootYaw, type CinematicRig } from "./cinematic-animation";
 import { ramp } from "./cinematic-shot-plan";
 import { CONTACT_PROGRESS } from "./cinematic-timing";
 
@@ -40,9 +40,12 @@ export function createCinematicAfterimages(scene: Scene, source: CinematicRig) {
         entry.root.visible = enabled && opacity > .005;
         if (!entry.root.visible) return;
         const previous = p - entry.delay;
+        entry.root.position.set(0, 0, 0);
+        entry.root.rotation.y = sampleRootYaw(previous);
         sampleCinematicAnimation(entry, previous);
         sampleRootPosition(previous, entry.root.position);
         entry.root.position.y += groundCorrection * ramp(previous, .68, CONTACT_PROGRESS);
+        entry.root.updateMatrixWorld(true);
         entry.material.opacity = opacity * (.24 - i * .07);
         entry.density.value = opacity * (.7 - i * .2);
       });

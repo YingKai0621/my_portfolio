@@ -252,6 +252,10 @@
 - Development inspector: `?cinematicDebug=1`. Fix direct-anchor text painting by removing persistent chapter layer promotion; WebGL failure releases pin into static flow. No hydration suppression/dev-indicator hiding. Clean-profile runs did not reproduce the supplied extension-mutated DOM warning.
 - Model stays local-only. Visual parity, detailed finger/contact articulation and real-device frame pacing remain unapproved. TypeScript/full ESLint ran; after visual review caught the anchor/fallback issue, typecheck and focused cinematic lint were rechecked successfully. No dependency/build/Playwright; E2E **DEFERRED** until P11.
 
+## H2.8A/B animation correction and rear view (2026-11-28; owner visual review pending)
+
+- The severe head fold was confirmed as accumulated additive rotation, not a source clip pose. Three.js `PropertyMixer.apply` can skip rewriting an unchanged animation value; saving/restoring animation-only joint bases makes repeated and reverse seeks deterministic. The real GLB bind axes support local-Z head/neck pitch and local-X spine yaw. Add a 150° root/body turn with a rear hold and an orbital front-side camera path inside the existing 28-viewport travel. Normal/neutral/source rendered frames, numeric 19-joint checks and limits are in `H2_8_ANIMATION_REVIEW.md`. This supersedes H2.7's assumption that `mixer.update(0)` alone always resets articulated joints. Provisional model rights and real-device motion quality remain open; P7 suspended and P8 not started.
+
 ## Primary references
 - P2 Aceternity component references: https://ui.aceternity.com/components/background-cubes-grid ; https://ui.aceternity.com/components/encrypted-text ; https://ui.aceternity.com/components/layout-text-flip ; https://ui.aceternity.com/components/floating-dock . Free component usage/licensing guidance: https://ui.aceternity.com/components and https://ui.aceternity.com/licence .
 - Owner CV and personal discovery provided in conversation; facts reproduced in CONTENT.md. Original CV intentionally not bundled.

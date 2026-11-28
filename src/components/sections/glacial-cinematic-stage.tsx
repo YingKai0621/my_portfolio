@@ -47,9 +47,14 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
     const ditherOverlay = stage.querySelector<HTMLElement>(".cinematic-dither");
     const scrollCue = stage.querySelector<HTMLElement>(".cinematic-scroll-cue");
     const skipControl = stage.querySelector<HTMLElement>(".cinematic-skip");
+    let lastProgress = Number.NaN;
+    let lastDesktop: boolean | undefined;
 
     const update = (value: number, desktop: boolean) => {
       const progress = clamp01(value);
+      if (lastDesktop === desktop && Math.abs(progress - lastProgress) < .00005) return;
+      lastProgress = progress;
+      lastDesktop = desktop;
       progressRef.current = progress;
       if (rangeRef.current) rangeRef.current.value = progress.toFixed(4);
       if (outputRef.current) outputRef.current.value = progress.toFixed(4);
@@ -137,6 +142,9 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
     const stage = stageRef.current;
     const canvas = canvasRef.current;
     if (!stage || !canvas || process.env.NODE_ENV !== "development") return;
+    const params = new URLSearchParams(window.location.search);
+    const inspection = params.has("cinematicSource") ? "source" : params.has("cinematicNeutral") ? "neutral" : "off";
+    stage.classList.toggle("is-neutral-inspection", inspection !== "off");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (inspectorRef.current) inspectorRef.current.hidden = !new URLSearchParams(window.location.search).has("cinematicDebug") || reduced.matches || window.innerWidth < 768;
     if (reduced.matches) return;
@@ -147,7 +155,7 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
       try {
         const { createCinematicScene } = await import("@/lib/glacier/cinematic-scene");
         if (disposed) return;
-        const controller = await createCinematicScene(canvas, ghostWords);
+        const controller = await createCinematicScene(canvas, ghostWords, inspection);
         if (disposed) { controller.dispose(); return; }
         controllerRef.current = controller;
         controller.setProgress(progressRef.current);
@@ -187,6 +195,7 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
       canvas.removeEventListener("webglcontextlost", onContextLost);
       controllerRef.current?.dispose();
       controllerRef.current = null;
+      stage.classList.remove("is-neutral-inspection");
     };
   }, [ghostWords]);
 
