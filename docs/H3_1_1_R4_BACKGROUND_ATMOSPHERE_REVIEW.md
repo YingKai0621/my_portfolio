@@ -1,8 +1,74 @@
 # H3.1.1-R4 — Background & Atmospheric Art Direction Review
 
-Status: **isolated S01 visual review gate**
+Status: **H3.1.1-R4.1 isolated S01 visual review gate**
 
 Scope: development-only S01 background exploration. The production `/en` experience, cinematic timeline, camera, target, FOV, authored pose, character root, robot scale and placement, identity layout, lighting and all later shots remain unchanged.
+
+## R4.1 correction summary
+
+The owner selected R4 Variant B as the direction to refine, not as an approved final background. R4.1 corrects the shader output pipeline first, then provides two denser art-direction profiles while preserving the selected spectral robot and the entire locked S01 composition.
+
+### Verified color-pipeline finding
+
+- Installed Three.js version: `0.187.0`.
+- The renderer uses `SRGBColorSpace`; the atmosphere is a custom `ShaderMaterial` with `toneMapped: false`.
+- Three.js `Color` uniforms are held in the working linear color space. The R4 fragment shader previously assigned those values directly to `gl_FragColor`.
+- Three injects the color-space helper definitions into non-raw shader materials, but a custom fragment shader still has to execute `#include <colorspace_fragment>` after setting `gl_FragColor`.
+- The missing output conversion made the R4 atmosphere materially darker and less legible than its configured palette implied.
+
+R4.1 now executes the standard Three.js color-space fragment step. It does **not** alter renderer exposure, tone mapping, character materials, scene lighting or any global color setting. The capture `artifacts/h3-1-1-r4-1/color-space-corrected-only-1920x1080.png` records the old R4 B field immediately after this pipeline correction and before any R4.1 density/art-direction adjustment.
+
+### Reference reinspection
+
+The `00:00–00:03` local MACACO opening evidence was re-compared with R4 B. The relevant observable principles are:
+
+- the halftone is legible across several upper, side and lower regions rather than one isolated lower-left patch;
+- its clusters vary in density and contain broad irregular gaps;
+- brighter areas still preserve a near-black foundation and negative space around the primary subject;
+- yellow/olive tonal mass, not isolated bright particles, creates depth in the reference;
+- supporting color remains subordinate to the dominant field.
+
+R4.1 independently maps those principles to near-black, dark green, Acid Green and restrained Electric Violet. No reference shader, texture or asset was reused.
+
+### R4.1 profiles
+
+#### B1 — Corrected Rich Atmosphere
+
+- wider multi-field coverage with clearly separated organic regions;
+- restrained diffuse energy and visible CSS-pixel halftone clusters;
+- broad black breathing room around the character and lower identity lockup;
+- reduced micro-speck frequency so the result does not read as a starfield.
+
+Preview:
+
+`http://localhost:3000/en?cinematicS01=1&s01Background=corrected`
+
+Background-only:
+
+`http://localhost:3000/en?cinematicS01=1&s01Background=corrected&s01BackgroundOnly=1`
+
+#### B2 — High-density Digital Atmosphere
+
+- the same deterministic distribution and palette as B1;
+- lower organic thresholds, finer halftone cells and stronger clustered coverage;
+- denser upper, middle and side fields while preserving a dark central silhouette region;
+- no bloom, large particles, neon blobs or autonomous animation.
+
+Preview:
+
+`http://localhost:3000/en?cinematicS01=1&s01Background=dense`
+
+Background-only:
+
+`http://localhost:3000/en?cinematicS01=1&s01Background=dense&s01BackgroundOnly=1`
+
+### Preview isolation correction
+
+The background-only state is now accepted only when `cinematicS01` activates the isolated preview and a recognized atmosphere profile is present. An invalid production-style URL such as `/en?s01Background=dense&s01BackgroundOnly=1` can no longer hide the character or add preview-only document classes. This is enforced both in the React query parser and again inside the Three scene controller.
+
+### Future industrial-stripe layer strategy
+
+No stripe is implemented in R4.1. The atmosphere plane is opaque and renders at `renderOrder: -120`, so the reliable future composition is a separate Three.js stripe plane/group in the same WebGL scene, ordered after the atmosphere and before the character, with depth writes disabled. That places the stripe visually **in front of the atmosphere but behind the robot** without turning the atmosphere transparent or coupling stripe geometry to the shader.
 
 ## 1. Locked robot material
 
@@ -106,6 +172,20 @@ Responsive evidence:
 
 - rich atmosphere at `390 × 844`: `artifacts/h3-1-1-r4/mobile-rich-390x844.png`
 
+R4.1 evidence is stored under the ignored `artifacts/h3-1-1-r4-1/` review directory:
+
+- original R4 B: `original-r4-variant-b-1920x1080.png`
+- color-space correction before artistic changes: `color-space-corrected-only-1920x1080.png`
+- B1 with robot: `b1-corrected-rich-atmosphere-1920x1080.png`
+- B2 with robot: `b2-high-density-digital-atmosphere-1920x1080.png`
+- B1 background-only: `b1-background-only-1920x1080.png`
+- B2 background-only: `b2-background-only-1920x1080.png`
+- B1 mobile at `390 × 844`: `b1-mobile-390x844.png`
+- four-way comparison: `r4-1-comparison-sheet-1920x1080.png`
+- invalid-query production sanity: `invalid-preview-query-production-sanity-1920x1080.png`
+
+Every R4.1 desktop capture retained the locked camera position `1.9290, 2.6608, 2.0673`, target `-0.2410, 2.8808, -0.6627`, `31°` FOV and zero root rotation. The mobile capture reported no horizontal overflow.
+
 The desktop captures reported NVIDIA GeForce RTX 3060 Laptop GPU through ANGLE D3D11. No horizontal overflow occurred in the mobile capture.
 
 ## 6. Performance and lifecycle
@@ -129,6 +209,15 @@ The desktop captures reported NVIDIA GeForce RTX 3060 Laptop GPU through ANGLE D
 
 Generated evidence is stored under `artifacts/h3-1-1-r4/` and is outside the production bundle.
 
+R4.1 modifies only:
+
+- `src/lib/glacier/cinematic-s01-atmosphere.ts`
+- `src/lib/glacier/cinematic-scene.ts`
+- `src/components/sections/glacial-cinematic-stage.tsx`
+- `docs/H3_1_1_R4_BACKGROUND_ATMOSPHERE_REVIEW.md`
+
+R4.1 evidence is stored under ignored `artifacts/h3-1-1-r4-1/`; it is not committed or shipped.
+
 ## 8. Validation
 
 - TypeScript: passed with `npm.cmd run typecheck`.
@@ -139,6 +228,25 @@ Generated evidence is stored under `artifacts/h3-1-1-r4/` and is outside the pro
 - Playwright: **DEFERRED** to P11 per the approved project workflow; not installed or executed.
 - Production build: not run; prohibited and unnecessary for this isolated review pass.
 
+R4.1 validation:
+
+- TypeScript: passed with `npm.cmd run typecheck`.
+- ESLint: passed with `npm.cmd run lint`.
+- Browser render: passed for B1, B2, both background-only views, B1 mobile and the invalid-query production sanity check; every canvas reported ready.
+- Runtime: no React exception, shader compilation error or WebGL warning was captured in an extension-disabled browser profile.
+- Playwright: **DEFERRED** to P11; not installed or executed.
+- Production build: not run; prohibited and unnecessary for this isolated review pass.
+
+### Next.js development indicator investigation
+
+The reported red indicator is a React hydration mismatch whose diff contains the external attribute `cz-shortcut-listen="true"` on the document element/body before React hydrates. That attribute is not rendered by this repository; it is injected into the DOM by a browser extension. A clean, extension-disabled Chrome profile reports:
+
+- no `cz-shortcut-listen` attribute on `<html>` or `<body>`;
+- no hydration exception or warning;
+- an empty Next.js issue portal.
+
+The clean profile still reports the unrelated existing network `404` for `/favicon.ico`; that request is not the hydration mismatch shown by the red indicator. R4.1 does not add `suppressHydrationWarning`, hide the indicator or otherwise mask the external DOM mutation.
+
 ## 9. Limitations and review questions
 
 - Evidence covers one desktop GPU and a simulated mobile viewport, not a physical mobile device.
@@ -148,4 +256,4 @@ Generated evidence is stored under `artifacts/h3-1-1-r4/` and is outside the pro
 
 ## Review gate
 
-Choose Variant A, Variant B, or request a focused density/color adjustment. Do not proceed to stripes, HUD graphics, particles beyond the current static micro-specks, typography redesign, animation, or later H3 shots until this S01 background direction is approved.
+Choose **B1 — Corrected Rich Atmosphere**, **B2 — High-density Digital Atmosphere**, or request another focused density/color correction. Do not proceed to stripes, HUD graphics, additional particles, typography redesign, animation, or later H3 shots until this S01 background direction is approved.

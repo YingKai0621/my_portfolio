@@ -41,6 +41,7 @@ export type S01SceneOptions = {
 export async function createCinematicScene(canvas: HTMLCanvasElement, words: readonly string[], inspection: CinematicInspection = "off", s01Look: S01LookVariant = "neutral", s01Options: S01SceneOptions = {}): Promise<CinematicSceneController> {
   const neutral = inspection !== "off";
   const s01Preview = inspection === "s01" || inspection === "s01-diagnostic";
+  const s01BackgroundOnly = s01Preview && Boolean(s01Options.backgroundOnly);
   const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
   renderer.setClearColor(new Color("#0B1013"), 0);
   renderer.outputColorSpace = SRGBColorSpace;
@@ -97,7 +98,7 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
     if (disposed || !visible || document.hidden) return;
     character.root.position.set(0, 0, 0);
     character.root.rotation.y = 0;
-    character.root.visible = !s01Options.backgroundOnly;
+    character.root.visible = !s01BackgroundOnly;
     sampleCinematicAnimation(character, progress, inspection === "source");
     materials?.setProgress(progress);
     backdrop?.setProgress(progress);
@@ -155,7 +156,7 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
         .map(value => value.toFixed(4)).join(",");
       canvas.dataset.s01Look = s01Look;
       canvas.dataset.s01Atmosphere = s01Options.atmosphere ?? "off";
-      canvas.dataset.s01BackgroundOnly = String(Boolean(s01Options.backgroundOnly));
+      canvas.dataset.s01BackgroundOnly = String(s01BackgroundOnly);
     }
     typography?.resize(camera.aspect, camera.fov);
     const s01Lighting = getS01LightingProfile(s01Look);

@@ -20,6 +20,12 @@ type Props = {
   previewIdentity: { label: string; name: string; career: string };
 };
 
+function parseS01AtmosphereVariant(value: string | null): S01AtmosphereVariant {
+  return value === "restrained" || value === "rich" || value === "corrected" || value === "dense"
+    ? value
+    : "off";
+}
+
 export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel, ghostWords, previewIdentity }: Props) {
   const t = useTranslations("GlacialCinematic");
   const stageRef = useRef<HTMLElement>(null);
@@ -41,15 +47,15 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
     const params = new URLSearchParams(window.location.search);
     const s01Preview = params.has("cinematicS01");
     const s01Diagnostic = params.get("cinematicS01") === "diagnostic";
-    const requestedAtmosphere = params.get("s01Background");
-    const s01Atmosphere = requestedAtmosphere === "restrained" || requestedAtmosphere === "rich";
-    const backgroundOnly = s01Atmosphere && params.has("s01BackgroundOnly");
+    const s01Atmosphere = parseS01AtmosphereVariant(params.get("s01Background"));
+    const hasS01Atmosphere = s01Atmosphere !== "off";
+    const backgroundOnly = s01Preview && hasS01Atmosphere && params.has("s01BackgroundOnly");
     stage.classList.toggle("is-s01-preview", s01Preview);
     stage.classList.toggle("is-s01-diagnostic", s01Diagnostic);
     stage.classList.toggle("has-s01-guides", s01Preview && params.has("s01Guides") && !s01Diagnostic);
-    stage.classList.toggle("has-s01-atmosphere", s01Preview && s01Atmosphere);
-    stage.classList.toggle("is-s01-background-only", s01Preview && backgroundOnly);
-    document.documentElement.classList.toggle("has-s01-background-only", s01Preview && backgroundOnly);
+    stage.classList.toggle("has-s01-atmosphere", s01Preview && hasS01Atmosphere);
+    stage.classList.toggle("is-s01-background-only", backgroundOnly);
+    document.documentElement.classList.toggle("has-s01-background-only", backgroundOnly);
     gsap.registerPlugin(ScrollTrigger);
     const media = gsap.matchMedia();
     fallbackRef.current = () => {
@@ -192,16 +198,13 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
     const params = new URLSearchParams(window.location.search);
     const s01Value = params.get("cinematicS01");
     const requestedLook = params.get("s01Material");
-    const requestedAtmosphere = params.get("s01Background");
-    const s01Atmosphere: S01AtmosphereVariant = requestedAtmosphere === "restrained" || requestedAtmosphere === "rich"
-      ? requestedAtmosphere
-      : "off";
+    const s01Atmosphere = parseS01AtmosphereVariant(params.get("s01Background"));
     const requestedS01Look: S01LookVariant = requestedLook === "cyan" || requestedLook === "balanced" || requestedLook === "contrast" || requestedLook === "spectral" || requestedLook === "acid" || requestedLook === "emerald" || requestedLook === "toxic"
       ? requestedLook
       : "neutral";
     // R4 background reviews are locked to the owner-selected R2 Variant C.
     const s01Look: S01LookVariant = s01Atmosphere === "off" ? requestedS01Look : "spectral";
-    const s01BackgroundOnly = s01Atmosphere !== "off" && params.has("s01BackgroundOnly");
+    const s01BackgroundOnly = s01Value !== null && s01Atmosphere !== "off" && params.has("s01BackgroundOnly");
     const inspection: CinematicInspection = params.has("cinematicSource") ? "source"
       : s01Value === "diagnostic" ? "s01-diagnostic"
       : s01Value !== null ? "s01"
