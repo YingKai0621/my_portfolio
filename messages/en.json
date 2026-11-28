@@ -23,6 +23,39 @@
     "previewLink": "Review the design system",
     "previewNote": "This review route is available only while the development server is running."
   },
+  "GlacialHero": {
+    "kicker": "QUIET PRECISION. BOLD CURIOSITY.",
+    "nameFirst": "LUONG",
+    "nameMiddle": "KHUONG",
+    "nameLast": "DUY.",
+    "discipline": "Software Engineering",
+    "specialty": "Java Backend Development",
+    "statement": "Based in Vietnam",
+    "linksLabel": "Explore and connect",
+    "projects": "Selected works"
+  },
+  "GlacialCinematic": {
+    "inspect": "Cinematic inspector · development only",
+    "inspectProgress": "Progress",
+    "inspectShot": "Review shot",
+    "label": "Glacial Awakening — cinematic introduction",
+    "skip": "Skip introduction",
+    "scroll": "Scroll to explore",
+    "chapterTwo": "02 / Awakening",
+    "chapterThree": "03 / Transformation",
+    "chapterFour": "04 / Digital world",
+    "chapterFive": "05 / The human side",
+    "awakening": "DRIVEN BY CURIOSITY.",
+    "transformation": "BUILT TO EXPLORE.",
+    "digitalWorld": "FORM FOLLOWS FUNCTION.",
+    "digitalWorldIntro": "From the systems I build to the people they serve.",
+    "aboutHandoff": "The story continues beyond the screen.",
+    "humanSide": "THE HUMAN SIDE.",
+    "ghostTwo": "CURIOSITY",
+    "ghostThree": "EXPLORE",
+    "ghostFour": "SYSTEMS",
+    "ghostFive": "HUMAN"
+  },
   "PosterHero": {
     "nameFirst": "Luong",
     "nameMiddle": "Khuong",
@@ -78,21 +111,37 @@
     "goTo": "Go to project {index}",
     "explore": "Explore project",
     "caseStudy": "Read case study",
-    "artworkNote": "Editorial illustration · product screenshots pending",
+    "artworkNote": "Conceptual artwork, not a product screenshot",
+    "selection": "Choose a project",
+    "techStack": "Tech Stack",
+    "pauseTechStack": "Pause technology animation",
+    "resumeTechStack": "Resume technology animation",
     "backToWorks": "Back to selected works",
     "detail": {
       "overview": "Overview",
       "context": "Problem & context",
-      "role": "My role & responsibilities",
-      "architecture": "System architecture",
+      "role": "Role",
+      "period": "Timeline",
+      "team": "Team",
+      "teamSize": "{count, plural, one {# member} other {# members}}",
+      "responsibilities": "My responsibilities",
+      "builtWith": "Built with",
+      "integration": "Payment integration",
+      "personal": "My contribution",
+      "projectScope": "Project scope",
+      "nextProject": "Next project",
       "challenges": "Technical challenges",
-      "decisions": "Engineering decisions",
-      "results": "Documented results",
-      "lessons": "Lessons learned",
-      "technology": "Technology",
-      "architectureNote": "The full architecture diagram and transaction boundaries await owner confirmation.",
-      "resultsNote": "These are documented implementation contributions, not production-performance claims. Public test evidence is pending."
+      "challenge": "Challenge",
+      "decision": "Engineering decision",
+      "results": "Scope & contributions"
     },
+      "technologyGroups": {
+        "backend": "Backend",
+        "frontend": "Frontend",
+        "database": "Database",
+        "caching": "Caching & Session Management",
+        "infrastructure": "Development & Infrastructure"
+      },
     "items": {
       "bookStreet": {
         "displayName": "Book Street",
@@ -100,19 +149,19 @@
         "category": "Event management system",
         "role": "Team Lead & Backend Developer",
         "period": "Sep–Nov 2026",
-        "summary": "A system for booth rental, partner activities, registration and payments, with backend work focused on concurrent reservations and duplicate payment handling.",
+        "summary": "An event system for booth rentals, partner activities, registration and payments. My work focused on backend architecture and reliable reservation flows.",
         "overview": "I led a five-member team across 11 sprints and owned backend architecture, API contracts, ERDs and integration planning for the Book Street event system.",
         "context": "The project combined booth rental, partner activities, registration, authentication, payments and notifications. Concurrent reservations and repeated payment notifications were key engineering concerns.",
         "responsibility1": "Defined use cases, acceptance criteria, API contracts and ERDs; coordinated integration across the team.",
         "responsibility2": "Authored controller mappings for 127 of 188 REST endpoints and created 16 of 18 Flyway migrations.",
         "responsibility3": "Built Redis-backed session authentication and addressed reservation and payment concurrency.",
-        "architecture": "The documented stack includes a Java/Spring Boot backend, PostgreSQL application schema, Redis-backed sessions, Flyway migrations, React, Docker and VNPay integration.",
         "challenge1": "Preventing conflicting outcomes when reservations are made concurrently.",
         "challenge2": "Handling duplicate payment notifications without repeating a business action.",
         "decision1": "Used pessimistic locking and UUID idempotency keys around concurrent reservation and payment flows.",
-        "decision2": "Validated VNPay signatures and IPN notifications as part of payment handling.",
-        "results": "The SQL scripts define 32 PostgreSQL application tables. The documented contribution covers 127 of 188 controller mappings and 16 of 18 Flyway migrations; these counts do not imply end-to-end ownership of every endpoint.",
-        "lessons": "Engineering takeaway from the documented design: reservation state and payment retries need explicit concurrency and idempotency boundaries. A personal retrospective is still awaiting owner review."
+        "decision2": "Used UUID idempotency keys to avoid repeating a payment action, alongside VNPay signature and IPN validation for incoming notifications.",
+        "metric1": "REST controller mappings authored by me, out of 188 total — not end-to-end endpoint ownership.",
+        "metric2": "Flyway migrations created by me, out of 18 total.",
+        "metric3": "PostgreSQL application tables defined in the project's SQL scripts."
       },
       "moonCake": {
         "displayName": "MoonCake",
@@ -120,20 +169,55 @@
         "category": "E-commerce system",
         "role": "Team Lead & Full-stack Java Developer",
         "period": "Oct–Nov 2026",
-        "summary": "A MoonCake commerce system with configurable gift boxes and batch-aware inventory, including checkout safeguards against duplicate orders and overselling.",
+        "summary": "An e-commerce system for customizable gift boxes and inventory tracked by batch. I led the full-stack integration and strengthened checkout.",
         "overview": "I led a three-member team, designed the foundational SQL Server schema and coordinated integration for the MoonCake commerce system.",
         "context": "The system covered customizable gift boxes, batch-based stock and checkout. Capacity limits, product expiry and stock restoration were documented constraints.",
         "responsibility1": "Designed a foundational 19-table SQL Server schema and authored 14 of 20 Flyway migrations.",
         "responsibility2": "Authored 64 of 93 Spring MVC handler mappings and coordinated full-stack integration.",
         "responsibility3": "Developed gift-box capacity rules, FEFO allocation, expiry calculation and exact-batch stock restoration on cancellation.",
-        "architecture": "The documented stack includes Java 21, Spring Boot, Thymeleaf, SQL Server, Flyway, HTML/CSS/JS and VNPay. A verified full system diagram has not been supplied.",
         "challenge1": "Avoiding duplicate checkout and overselling when stock changes concurrently.",
         "challenge2": "Preserving batch-level stock and expiry rules across customization and cancellation.",
         "decision1": "Used conditional state updates and pessimistic batch locking for checkout safety.",
         "decision2": "Applied FEFO allocation, the earliest-expiring cake for box expiry, and exact-batch stock restoration after cancellation.",
-        "results": "The documented contribution includes a foundational 19-table schema, 14 of 20 Flyway migrations and 64 of 93 Spring MVC handler mappings. These are implementation counts, not measured production outcomes.",
-        "lessons": "Engineering takeaway from the documented design: batch identity matters when allocating and restoring stock; a total quantity alone cannot describe the cancellation path. A personal retrospective is still awaiting owner review."
+        "metric1": "Spring MVC handler mappings authored by me, out of 93 total — not end-to-end feature ownership.",
+        "metric2": "Flyway migrations authored by me, out of 20 total.",
+        "metric3": "Tables in the foundational SQL Server schema designed by me."
       }
+    }
+  },
+  "ExpertiseResearch": {
+    "headingFirst": "TECHNICAL",
+      "headingSecond": "EXPERTISE.",
+      "inventoryHeading": "Technologies & Tools",
+    "primaryHeading": "Java Backend Development.",
+    "primaryDescription": "I build backend flows where concurrency, state and data integrity matter: reservations, checkout, authentication and payments.",
+    "primaryEvidence": "My project work includes Spring Boot APIs, relational schemas, Redis-backed sessions, Flyway migrations and idempotent payment handling.",
+    "cloudLabel": "Interactive technology cloud",
+    "cloudKeyboard": "Use the left and right arrow keys to explore technology names. Drag with a pointer to rotate the cloud.",
+    "pauseCloud": "Pause technology cloud",
+    "resumeCloud": "Resume technology cloud",
+    "capabilities": {
+      "languages": {
+        "name": "Programming languages",
+        "description": "Java anchors my backend work; Python supports my LLM robustness research. I also work with JavaScript, TypeScript and SQL."
+      },
+      "web": {
+        "name": "Web development",
+        "description": "I have built Spring Boot and Spring MVC flows, with React and Thymeleaf in the documented project stacks."
+      },
+      "data": {
+        "name": "Data & state",
+        "description": "My project work includes PostgreSQL and SQL Server schemas, Flyway migrations, Redis-backed sessions and batch-aware inventory."
+      },
+      "tools": {
+        "name": "Development & testing",
+        "description": "I use version control, containers, API inspection and browser testing tools across development work."
+      }
+    },
+    "research": {
+      "heading": "Research & Exploration",
+      "description": "I am interested in artificial intelligence and scientific research. As a research co-author, I implemented an adaptive beam-search pipeline for LLM classifier robustness testing under validity constraints.",
+      "status": "Accepted for ICIIT 2027 · Not yet published"
     }
   },
   "Hero": {
@@ -155,6 +239,63 @@
     "bottomNote": "The journey continues soon",
     "bottomCoordinate": "ENGINEERING / CURIOSITY"
   },
+  "Journey": {
+    "heading": "MY JOURNEY.",
+    "scrollCue": "Scroll to open",
+    "overlayPeriod": "2024 — NOW.",
+    "overlayLine": "A journey still in progress.",
+    "photoNote": "Illustrative stock photography — not personal or event photographs.",
+    "storyIndex": "2024 — NOW",
+    "storyIntroduction": "Software Engineering at FPT University, team competitions and research: the experiences shaping how I build.",
+    "chapters": {
+      "education": {
+        "period": "2024 — expected 2028 / FPT UNIVERSITY",
+        "title": "Software Engineering at FPT University.",
+        "description": "I began studying Software Engineering at FPT University in Ho Chi Minh City in October 2024.",
+        "detail": "Expected graduation: 2028. I am building a strong technical foundation and applying it in software projects."
+      },
+      "innovation": {
+        "period": "2025—2026 / INNOVATION",
+        "title": "Competitions & teamwork.",
+        "description": "Competition work sharpened collaboration; two finalist milestones mark this period.",
+        "detail": ""
+      },
+      "research": {
+        "period": "2026 / RESEARCH",
+        "title": "Research & exploration.",
+        "description": "Finalist in FPT University's Student Scientific Research competition; research co-author on LLM robustness testing.",
+        "detail": "The co-authored paper was accepted for ICIIT 2027 according to the supplied CV; it has not yet been published."
+      }
+    },
+    "achievements": {
+      "seal": {
+        "rank": "TOP 3",
+        "title": "SEAL Hackathon Track Finalist",
+        "context": "FPT University · 2025 · Track finalist, not an overall third-place award."
+      },
+      "nasa": {
+        "rank": "TOP 10",
+        "title": "NASA Space Apps Challenge Ho Chi Minh City",
+        "context": "Finalist among 54 teams · October 2026."
+      }
+    },
+    "closingIndex": "WHAT COMES NEXT",
+    "closingFirst": "ALWAYS LEARNING.",
+    "closingSecond": "STILL BUILDING."
+  },
+  "ProjectGlacier": {
+    "label": "Project Glacier — cinematic mecha experience",
+    "loading": "Preparing the character…",
+    "unavailable": "The 3D view is unavailable. All four chapters remain readable as text.",
+    "skip": "Skip experience",
+    "scroll": "Scroll to explore",
+    "scenes": {
+      "awakening": "BEYOND THE CODE.",
+      "assembly": "BUILT TO EXPLORE.",
+      "transformation": "BREAK THE LIMITS.",
+      "horizon": "THE NEXT CHAPTER."
+    }
+  },
   "Dock": {
     "label": "Main navigation",
     "menu": "Open navigation",
@@ -166,7 +307,7 @@
     "projects": "Projects",
     "skillsResearch": "Skills and research",
     "journey": "Journey",
-    "playground": "Playground",
+    "playground": "Project Glacier",
     "contact": "Contact"
   },
   "DesignPreview": {

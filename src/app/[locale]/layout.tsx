@@ -88,6 +88,7 @@ export default async function LocaleLayout({
         displayFont.variable,
         monoFont.variable,
       )}
+      data-scroll-behavior="smooth"
       lang={locale}
     >
       <body>

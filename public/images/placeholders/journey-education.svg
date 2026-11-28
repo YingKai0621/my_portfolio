@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Abstract architectural study in basalt and glacier blue">
+  <rect width="1200" height="900" fill="#142128"/>
+  <path d="M0 0h1200v900H0z" fill="none" stroke="#385461" stroke-width="2"/>
+  <g opacity=".22" stroke="#7295a2" stroke-width="1">
+    <path d="M0 120h1200M0 240h1200M0 360h1200M0 480h1200M0 600h1200M0 720h1200M0 840h1200"/>
+    <path d="M120 0v900M240 0v900M360 0v900M480 0v900M600 0v900M720 0v900M840 0v900M960 0v900M1080 0v900"/>
+  </g>
+  <path d="M145 713V199l446-112 466 112v514L591 828 145 713Z" fill="#20343e" stroke="#82a7b3" stroke-width="3"/>
+  <path d="M591 87v741M145 199l446 135 466-135M145 713l446-125 466 125" fill="none" stroke="#82a7b3" stroke-width="3"/>
+  <path d="M241 668V287l350 102v200L241 668ZM943 668V287L591 389v200l352 79Z" fill="#101b21" stroke="#486c78" stroke-width="2"/>
+  <path d="M591 87v247M591 589v239" stroke="#1ba6cd" stroke-width="8"/>
+  <circle cx="591" cy="461" r="76" fill="#1ba6cd" fill-opacity=".12" stroke="#1ba6cd" stroke-width="3"/>
+  <path d="M550 461h82M591 420v82" stroke="#e8f3f6" stroke-width="2"/>
+  <text x="55" y="65" fill="#a6b9c2" font-family="monospace" font-size="18" letter-spacing="4">STUDY / STRUCTURE</text>
+  <text x="1150" y="845" fill="#a6b9c2" font-family="monospace" font-size="18" text-anchor="end" letter-spacing="4">01 / 03</text>
+</svg>

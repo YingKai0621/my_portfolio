@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Abstract branching search paths in basalt and glacier blue">
+  <rect width="1200" height="900" fill="#16232a"/>
+  <g fill="none" stroke="#4e6c78" stroke-width="2">
+    <path d="M135 442h190l139-237h221l151 237h231M325 442l139 237h221l151-237M464 205l221 474M464 679l221-474"/>
+    <circle cx="135" cy="442" r="12"/><circle cx="1067" cy="442" r="12"/>
+    <circle cx="464" cy="205" r="18"/><circle cx="464" cy="679" r="18"/>
+    <circle cx="685" cy="205" r="18"/><circle cx="685" cy="679" r="18"/>
+  </g>
+  <path d="M135 442h190l139-237h221l151 237h231" fill="none" stroke="#1ba6cd" stroke-width="5"/>
+  <circle cx="836" cy="442" r="39" fill="#123745" stroke="#1ba6cd" stroke-width="4"/>
+  <circle cx="836" cy="442" r="8" fill="#e8f3f6"/>
+  <g stroke="#2c4650" stroke-width="1" opacity=".75">
+    <path d="M84 115h1032M84 785h1032M87 117v668M1113 117v668"/>
+    <path d="M84 340h1032M84 560h1032M360 115v670M600 115v670M840 115v670" stroke-dasharray="3 12"/>
+  </g>
+  <text x="56" y="68" fill="#a6b9c2" font-family="monospace" font-size="18" letter-spacing="4">SEARCH / QUESTION</text>
+  <text x="1145" y="845" fill="#a6b9c2" font-family="monospace" font-size="18" text-anchor="end" letter-spacing="4">03 / 03</text>
+</svg>

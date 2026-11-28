@@ -24,6 +24,8 @@ next-env.d.ts
 # Personal content pending public review
 /docs/CONTENT.md
 /public/cv/
+/public/assets/provisional/
+/docs/reference/*.mp4
 
 # Local tooling
 /.vercel/

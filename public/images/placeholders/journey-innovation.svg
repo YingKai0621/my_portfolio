@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1120" viewBox="0 0 900 1120" role="img" aria-label="Abstract orbital and launch geometry in glacial colors">
+  <rect width="900" height="1120" fill="#111e25"/>
+  <g stroke="#435e69" stroke-width="2" fill="none">
+    <circle cx="450" cy="560" r="370"/><circle cx="450" cy="560" r="295"/><circle cx="450" cy="560" r="218"/><circle cx="450" cy="560" r="140"/>
+    <path d="M0 560h900M450 0v1120"/>
+  </g>
+  <path d="M84 1000 450 133 816 1000" fill="none" stroke="#1ba6cd" stroke-width="4"/>
+  <path d="M205 900h490L450 305 205 900Z" fill="#1b2a32" stroke="#a6b9c2" stroke-width="2"/>
+  <path d="M450 305v595M205 900h490" stroke="#1ba6cd" stroke-width="3"/>
+  <path d="M450 438 327 807h246L450 438Z" fill="#123745" stroke="#1ba6cd" stroke-width="2"/>
+  <circle cx="450" cy="560" r="28" fill="#1ba6cd"/>
+  <circle cx="245" cy="346" r="10" fill="#e8f3f6"/><circle cx="677" cy="747" r="10" fill="#e8f3f6"/>
+  <path d="M245 346 450 560 677 747" fill="none" stroke="#e8f3f6" stroke-opacity=".5" stroke-dasharray="7 11"/>
+  <text x="54" y="74" fill="#a6b9c2" font-family="monospace" font-size="18" letter-spacing="4">IDEA / EXPERIMENT</text>
+  <text x="846" y="1060" fill="#a6b9c2" font-family="monospace" font-size="18" text-anchor="end" letter-spacing="4">02 / 03</text>
+</svg>
