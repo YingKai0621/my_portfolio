@@ -7,15 +7,18 @@ import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 
 import { loadGlacierCharacter } from "./character";
-import { sampleCinematicAnimation, sampleRootPosition, sampleRootYaw } from "./cinematic-animation";
+import { sampleCinematicAnimation, sampleRootPosition } from "./cinematic-animation";
 import { createCinematicAura } from "./cinematic-aura";
 import { createCinematicAfterimages } from "./cinematic-afterimages";
 import { CONTACT_PROGRESS } from "./cinematic-timing";
 import { createCinematicBackdrop } from "./cinematic-backdrop";
 import { createCinematicEnvironment } from "./cinematic-environment";
 import { createCinematicMaterials } from "./cinematic-materials";
+import { applyS01Look, getS01LightingProfile, type S01LookVariant } from "./cinematic-s01-look";
+import { createS01Atmosphere, type S01AtmosphereVariant } from "./cinematic-s01-atmosphere";
+import { getS01PreviewCamera } from "./cinematic-s01-preview";
 import { createCinematicType } from "./cinematic-type";
-import { sampleCinematicShot, sampleCinematicCameraArc, clamp01, ramp } from "./cinematic-shot-plan";
+import { sampleCinematicShot, sampleCinematicCameraArc, HARD_CUT_PROGRESS, clamp01, ramp } from "./cinematic-shot-plan";
 import { createHeroLighting } from "./hero-lighting";
 import { glacierPixelRatio } from "./quality-policy";
 
@@ -26,10 +29,18 @@ export type CinematicSceneController = {
   dispose(): void;
 };
 
+export type CinematicInspection = "off" | "neutral" | "source" | "s01" | "s01-diagnostic";
+
+export type S01SceneOptions = {
+  atmosphere?: S01AtmosphereVariant;
+  backgroundOnly?: boolean;
+};
+
 // One renderer, one provisional character and one absolute scroll coordinate.
 // Nothing animates in an independent loop: seeking backward samples the same pose.
-export async function createCinematicScene(canvas: HTMLCanvasElement, words: readonly string[], inspection: "off" | "neutral" | "source" = "off"): Promise<CinematicSceneController> {
+export async function createCinematicScene(canvas: HTMLCanvasElement, words: readonly string[], inspection: CinematicInspection = "off", s01Look: S01LookVariant = "neutral", s01Options: S01SceneOptions = {}): Promise<CinematicSceneController> {
   const neutral = inspection !== "off";
+  const s01Preview = inspection === "s01" || inspection === "s01-diagnostic";
   const renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
   renderer.setClearColor(new Color("#0B1013"), 0);
   renderer.outputColorSpace = SRGBColorSpace;
@@ -38,7 +49,7 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
   const scene = new Scene();
   const camera = new PerspectiveCamera(31, 1, 0.05, 100);
   scene.add(camera);
-  const lighting = createHeroLighting(scene, renderer, true);
+  const lighting = createHeroLighting(scene, renderer, s01Preview ? s01Look : true);
   let character: Awaited<ReturnType<typeof loadGlacierCharacter>>;
   try {
     character = await loadGlacierCharacter();
@@ -48,6 +59,7 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
     throw error;
   }
   scene.add(character.root);
+  if (s01Preview) applyS01Look(character.materialSlots, s01Look);
   // Calibrate the actual skinned contact pose once, not per frame or from a
   // chapter boundary. 30% of descent gives the deepest compressed bounds;
   // feet stop translating at 27%, earlier: CONTACT_PROGRESS is .705, not .715.
@@ -59,6 +71,9 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
   const afterimages = neutral || constrained ? null : createCinematicAfterimages(scene, character);
   const materials = neutral ? null : createCinematicMaterials(character.materialSlots);
   const backdrop = neutral ? null : createCinematicBackdrop(scene);
+  const s01Atmosphere = s01Preview && s01Options.atmosphere && s01Options.atmosphere !== "off"
+    ? createS01Atmosphere(scene, s01Options.atmosphere)
+    : null;
   const typography = neutral ? null : createCinematicType(camera, words);
   const environment = neutral ? null : createCinematicEnvironment(scene);
   const composer = neutral ? null : new EffectComposer(renderer);
@@ -81,7 +96,8 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
     frame = 0;
     if (disposed || !visible || document.hidden) return;
     character.root.position.set(0, 0, 0);
-    character.root.rotation.y = inspection === "source" ? 0 : sampleRootYaw(progress);
+    character.root.rotation.y = 0;
+    character.root.visible = !s01Options.backgroundOnly;
     sampleCinematicAnimation(character, progress, inspection === "source");
     materials?.setProgress(progress);
     backdrop?.setProgress(progress);
@@ -94,7 +110,11 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
     sampleCinematicCameraArc(from, to, mix, target, position);
     position.addScaledVector(hipsOffset, tracking);
     target.addScaledVector(hipsOffset, tracking);
-    if (camera.aspect < 0.78) {
+    if (s01Preview) {
+      const preview = getS01PreviewCamera(camera.aspect, inspection === "s01-diagnostic");
+      position.copy(preview.position).add(hipsOffset);
+      target.copy(preview.target).add(hipsOffset);
+    } else if (camera.aspect < 0.78) {
       if (progress < 0.15) {
         position.set(1.45, 5.05, 6.3).add(hipsOffset);
         target.set(-0.18, 4.75, 0).add(hipsOffset);
@@ -102,6 +122,11 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
         position.sub(target).multiplyScalar(1.3).add(target);
         target.y += 0.26;
         position.y += 0.26;
+        // The desktop close-up is deliberately left-weighted. Pan its mobile
+        // framing back toward the helmet, then release with the next camera move.
+        const closeUpPan = progress >= HARD_CUT_PROGRESS ? 1.1 * (1 - ramp(progress, .56, .635)) : 0;
+        position.x -= closeUpPan;
+        target.x -= closeUpPan;
       }
     }
     sampleRootPosition(progress, character.root.position);
@@ -119,17 +144,30 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
     camera.position.copy(position);
     camera.lookAt(target);
     camera.rotateZ(shake * .0105);
-    camera.fov = (from.fov + (to.fov - from.fov) * mix) + (camera.aspect < 0.78 ? 7 : 0);
+    const previewCamera = s01Preview ? getS01PreviewCamera(camera.aspect, inspection === "s01-diagnostic") : null;
+    camera.fov = previewCamera?.fov ?? ((from.fov + (to.fov - from.fov) * mix) + (camera.aspect < 0.78 ? 7 : 0));
     camera.updateProjectionMatrix();
+    if (s01Preview) {
+      canvas.dataset.s01Camera = position.toArray().map(value => value.toFixed(4)).join(",");
+      canvas.dataset.s01Target = target.toArray().map(value => value.toFixed(4)).join(",");
+      canvas.dataset.s01Fov = camera.fov.toFixed(2);
+      canvas.dataset.s01RootRotation = [character.root.rotation.x, character.root.rotation.y, character.root.rotation.z]
+        .map(value => value.toFixed(4)).join(",");
+      canvas.dataset.s01Look = s01Look;
+      canvas.dataset.s01Atmosphere = s01Options.atmosphere ?? "off";
+      canvas.dataset.s01BackgroundOnly = String(Boolean(s01Options.backgroundOnly));
+    }
     typography?.resize(camera.aspect, camera.fov);
-    lighting.setScene(
+    const s01Lighting = getS01LightingProfile(s01Look);
+    if (s01Preview) lighting.setScene(s01Lighting.key, s01Lighting.fill, s01Lighting.rim, s01Lighting.environment, s01Lighting.spectral);
+    else lighting.setScene(
       from.key + (to.key - from.key) * mix,
       from.fill + (to.fill - from.fill) * mix,
       from.rim + (to.rim - from.rim) * mix,
       from.environment + (to.environment - from.environment) * mix,
       ramp(progress, .14, .21) * (1 - ramp(progress, .43, .59)) * 2.5,
     );
-    renderer.toneMappingExposure = .73 + ramp(progress, .16, .24) * (1 - ramp(progress, .43, .59)) * .10;
+    renderer.toneMappingExposure = s01Preview ? s01Lighting.exposure : .73 + ramp(progress, .16, .24) * (1 - ramp(progress, .43, .59)) * .10;
     if (bloom) bloom.strength = .20 + Math.max(0, impact) * .25;
     if (camera.aspect >= 0.78 && composer) composer.render();
     else renderer.render(scene, camera);
@@ -147,6 +185,7 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
     composer?.setPixelRatio(ratio);
     composer?.setSize(width, height);
     backdrop?.resize(width, height, ratio);
+    s01Atmosphere?.resize(width, height, ratio);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     typography?.resize(camera.aspect, camera.fov);
@@ -170,9 +209,17 @@ export async function createCinematicScene(canvas: HTMLCanvasElement, words: rea
       afterimages?.dispose();
       environment?.dispose();
       backdrop?.dispose();
+      s01Atmosphere?.dispose();
       typography?.dispose();
       lighting.dispose();
       composer?.dispose();
+      delete canvas.dataset.s01Camera;
+      delete canvas.dataset.s01Target;
+      delete canvas.dataset.s01Fov;
+      delete canvas.dataset.s01RootRotation;
+      delete canvas.dataset.s01Look;
+      delete canvas.dataset.s01Atmosphere;
+      delete canvas.dataset.s01BackgroundOnly;
       renderer.dispose();
       renderer.forceContextLoss();
     },

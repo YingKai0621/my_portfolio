@@ -4,7 +4,6 @@ import { ramp } from "./cinematic-shot-plan";
 
 export type CinematicRig = Pick<Awaited<ReturnType<typeof loadGlacierCharacter>>, "root" | "mixer" | "clips">;
 const zAxis = new Vector3(0, 0, 1);
-const torsoAxis = new Vector3(1, 0, 0);
 const turn = new Quaternion();
 type PoseTrack = { bone: NonNullable<ReturnType<CinematicRig["root"]["getObjectByName"]>>; open: Quaternion; closed: Quaternion };
 type RigPose = { fingers: PoseTrack[]; baseRotations: Map<Object3D, Quaternion> };
@@ -105,21 +104,7 @@ export function sampleCinematicAnimation(rig: CinematicRig, p: number, originalC
     const bone = rig.root.getObjectByName(name);
     if (bone) bone.quaternion.multiply(turn.setFromAxisAngle(zAxis, pitch));
   }
-  // The root supplies the turn; a restrained upper-body lead and release keep
-  // the hips and shoulder animation from reading as a rigid turntable spin.
-  const torsoLead = .11 * ramp(p, .365, .415) * (1 - ramp(p, .47, .515));
-  const torsoRelease = -.085 * ramp(p, .49, .535) * (1 - ramp(p, .565, .6));
-  for (const [name, scale] of [["Spine_1_Jt", .6], ["Spine_2_Jt", .4]] as const) {
-    const bone = rig.root.getObjectByName(name);
-    if (bone) bone.quaternion.multiply(turn.setFromAxisAngle(torsoAxis, (torsoLead + torsoRelease) * scale));
-  }
   rig.root.updateMatrixWorld(true);
-}
-
-export function sampleRootYaw(p: number) {
-  // The model faces +Z. Turning toward -Z exposes its back to the front-side
-  // camera; all angles are sampled directly from scroll progress.
-  return 2.62 * ramp(p, .39, .465) * (1 - ramp(p, .50, .56));
 }
 
 export function sampleRootPosition(p: number, target: Vector3) {

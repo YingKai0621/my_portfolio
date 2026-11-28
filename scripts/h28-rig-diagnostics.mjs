@@ -120,7 +120,7 @@ registerHooks({
     return nextResolve(specifier, context);
   },
 });
-const { sampleCinematicAnimation, sampleRootYaw } = await import("../src/lib/glacier/cinematic-animation.ts");
+const { sampleCinematicAnimation } = await import("../src/lib/glacier/cinematic-animation.ts");
 const actions = Object.fromEntries(Object.entries(clips).map(([name, clip]) => {
   const action = mixer.clipAction(clip).play();
   action.setEffectiveWeight(0);
@@ -131,7 +131,7 @@ const angle = (a, b) => 2 * Math.acos(Math.min(1, Math.abs(a.clone().normalize()
 const controlled = bones.filter((bone) => /^(Right_(Index|Middle|Anular|Pinky|Thumb)_[123]_Jt|Head_Jt|Neck_Jt|Spine_[12]_Jt)$/.test(bone.name));
 const snapshot = () => controlled.map((bone) => bone.quaternion.clone());
 const maxChange = (before) => Math.max(...controlled.map((bone, index) => angle(before[index], bone.quaternion)));
-for (const progress of [.24, .28, .35, .38, .40, .45, .55]) {
+for (const progress of [.24, .28, .35, .38, .40, .4399, .44, .4401, .45, .55]) {
   sampleCinematicAnimation(rig, progress);
   const first = snapshot();
   for (let repeat = 0; repeat < 8; repeat++) sampleCinematicAnimation(rig, progress);
@@ -140,6 +140,6 @@ for (const progress of [.24, .28, .35, .38, .40, .45, .55]) {
   sampleCinematicAnimation(rig, .65);
   sampleCinematicAnimation(rig, progress);
   const reversed = maxChange(first);
-  console.log(JSON.stringify({ progress, joints: controlled.length, repeatedMaxDegrees: +repeated.toFixed(6), reverseSeekMaxDegrees: +reversed.toFixed(6), rootYawDegrees: +(sampleRootYaw(progress) * 180 / Math.PI).toFixed(3) }));
+  console.log(JSON.stringify({ progress, joints: controlled.length, repeatedMaxDegrees: +repeated.toFixed(6), reverseSeekMaxDegrees: +reversed.toFixed(6) }));
   if (repeated > .01 || reversed > .01) process.exitCode = 1;
 }

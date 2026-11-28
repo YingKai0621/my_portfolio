@@ -30,9 +30,13 @@ H2 direction change (2026-11-27): the P7 Project Glacier homepage section is tem
 
 Unified P2/P3 only: 28-viewport choreography, articulated look-up/down and right-hand grip, original aura, deeper close-up, gesture-linked luminous architecture, two deterministic afterimages, actual descent/contact and camera recoil; integrated About reading intervals with no SYSTEMS collision. Development inspector: `?cinematicDebug=1`. See `H2_7_CHOREOGRAPHY_REVIEW.md` for reference timestamps, checks and limitations. Owner visual approval, real-device motion quality, detailed grip/contact and model public-use rights remain pending. P4–P6 preserved; P7 suspended; no P8, Playwright, build, commit, push or deploy.
 
-## H2.8A + H2.8B — current visual review gate
+## H2.8A + H2.8B — prior visual review gate
 
 Correct additive head/neck accumulation using saved animation-only joint quaternions; sample the 19 controlled joints deterministically across repeated and reverse seeks. Add a measured 150° root/body turn, stable rear hold, front-side orbital camera path and slower head/hand beats within the existing 28-viewport span. Development-only neutral/source inspection modes and local review frames support owner approval. See `H2_8_ANIMATION_REVIEW.md`. No additional effects or P4–P6 changes; P7 suspended, P8 not started. Playwright/E2E **DEFERRED** to P11; no build/commit/push/deploy for this review.
+
+## H2.9.1 — current visual review gate
+
+Supersede H2.8's artificial 150° turn with one explicit camera hard cut at progress `.44`: held elevated full body → left-weighted helmet/shoulder close-up. Preserve the verified quaternion fix, source clips, materials, aura, remaining sequence and 28-viewport travel. Five local rendered frames, native-rate reference inspection, forward/reverse and numeric camera/rig checks are documented in `H2_9_1_HARD_CUT_REVIEW.md`. Owner visual approval remains pending. No H2.9.2, P4–P6 changes, P7/P8, Playwright, build, commit, push or deploy; automated E2E is **DEFERRED** until P11.
 
 ## Review report template
 - Phase and scope completed

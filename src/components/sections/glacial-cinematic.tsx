@@ -15,6 +15,11 @@ export async function GlacialCinematic() {
       skipLabel={t("skip")}
       scrollLabel={t("scroll")}
       ghostWords={[hero("nameLast"), t("ghostTwo"), t("ghostThree"), t("ghostFour")]}
+      previewIdentity={{
+        label: hero("portfolioLabel"),
+        name: hero("previewName"),
+        career: `${hero("discipline")} · ${hero("specialty")}`,
+      }}
     >
       <div className="awakening-frame cinematic-chapter cinematic-chapter-identity">
         <div className="awakening-copy">

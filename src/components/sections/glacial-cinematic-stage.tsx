@@ -5,13 +5,22 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
 
-import type { CinematicSceneController } from "@/lib/glacier/cinematic-scene";
+import type { CinematicInspection, CinematicSceneController } from "@/lib/glacier/cinematic-scene";
+import type { S01AtmosphereVariant } from "@/lib/glacier/cinematic-s01-atmosphere";
+import type { S01LookVariant } from "@/lib/glacier/cinematic-s01-look";
 import { clamp01, ramp } from "@/lib/glacier/cinematic-shot-plan";
 import { ABOUT_PROGRESS, CHAPTER_WINDOWS, CINEMATIC_TRAVEL, REVIEW_SHOTS } from "@/lib/glacier/cinematic-timing";
 
-type Props = { children: ReactNode; label: string; skipLabel: string; scrollLabel: string; ghostWords: readonly string[] };
+type Props = {
+  children: ReactNode;
+  label: string;
+  skipLabel: string;
+  scrollLabel: string;
+  ghostWords: readonly string[];
+  previewIdentity: { label: string; name: string; career: string };
+};
 
-export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel, ghostWords }: Props) {
+export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel, ghostWords, previewIdentity }: Props) {
   const t = useTranslations("GlacialCinematic");
   const stageRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -29,6 +38,18 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
     const stage = stageRef.current;
     const canvas = canvasRef.current;
     if (!stage || !canvas) return;
+    const params = new URLSearchParams(window.location.search);
+    const s01Preview = params.has("cinematicS01");
+    const s01Diagnostic = params.get("cinematicS01") === "diagnostic";
+    const requestedAtmosphere = params.get("s01Background");
+    const s01Atmosphere = requestedAtmosphere === "restrained" || requestedAtmosphere === "rich";
+    const backgroundOnly = s01Atmosphere && params.has("s01BackgroundOnly");
+    stage.classList.toggle("is-s01-preview", s01Preview);
+    stage.classList.toggle("is-s01-diagnostic", s01Diagnostic);
+    stage.classList.toggle("has-s01-guides", s01Preview && params.has("s01Guides") && !s01Diagnostic);
+    stage.classList.toggle("has-s01-atmosphere", s01Preview && s01Atmosphere);
+    stage.classList.toggle("is-s01-background-only", s01Preview && backgroundOnly);
+    document.documentElement.classList.toggle("has-s01-background-only", s01Preview && backgroundOnly);
     gsap.registerPlugin(ScrollTrigger);
     const media = gsap.matchMedia();
     fallbackRef.current = () => {
@@ -91,6 +112,32 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
       canvas.style.opacity = (1 - ramp(progress, 0.985, 1) * 0.6).toFixed(3);
     };
 
+    if (s01Preview) {
+      update(0, window.innerWidth >= 768);
+      panels.forEach((panel, index) => {
+        const active = index === 0 && !s01Diagnostic;
+        panel.style.opacity = active ? "1" : "0";
+        panel.style.visibility = active ? "visible" : "hidden";
+        panel.style.transform = "none";
+        panel.inert = !active;
+        panel.setAttribute("aria-hidden", String(!active));
+      });
+      if (inspectorRef.current) inspectorRef.current.hidden = true;
+      return () => {
+        fallbackRef.current = null;
+        media.revert();
+        stage.classList.remove("is-s01-preview", "is-s01-diagnostic", "has-s01-guides", "has-s01-atmosphere", "is-s01-background-only");
+        document.documentElement.classList.remove("has-s01-background-only");
+        panels.forEach((panel) => {
+          panel.inert = false;
+          panel.removeAttribute("aria-hidden");
+          panel.style.removeProperty("opacity");
+          panel.style.removeProperty("visibility");
+          panel.style.removeProperty("transform");
+        });
+      };
+    }
+
     media.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
       update(0, true);
       const trigger = ScrollTrigger.create({
@@ -143,11 +190,27 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
     const canvas = canvasRef.current;
     if (!stage || !canvas || process.env.NODE_ENV !== "development") return;
     const params = new URLSearchParams(window.location.search);
-    const inspection = params.has("cinematicSource") ? "source" : params.has("cinematicNeutral") ? "neutral" : "off";
-    stage.classList.toggle("is-neutral-inspection", inspection !== "off");
+    const s01Value = params.get("cinematicS01");
+    const requestedLook = params.get("s01Material");
+    const requestedAtmosphere = params.get("s01Background");
+    const s01Atmosphere: S01AtmosphereVariant = requestedAtmosphere === "restrained" || requestedAtmosphere === "rich"
+      ? requestedAtmosphere
+      : "off";
+    const requestedS01Look: S01LookVariant = requestedLook === "cyan" || requestedLook === "balanced" || requestedLook === "contrast" || requestedLook === "spectral" || requestedLook === "acid" || requestedLook === "emerald" || requestedLook === "toxic"
+      ? requestedLook
+      : "neutral";
+    // R4 background reviews are locked to the owner-selected R2 Variant C.
+    const s01Look: S01LookVariant = s01Atmosphere === "off" ? requestedS01Look : "spectral";
+    const s01BackgroundOnly = s01Atmosphere !== "off" && params.has("s01BackgroundOnly");
+    const inspection: CinematicInspection = params.has("cinematicSource") ? "source"
+      : s01Value === "diagnostic" ? "s01-diagnostic"
+      : s01Value !== null ? "s01"
+      : params.has("cinematicNeutral") ? "neutral"
+      : "off";
+    stage.classList.toggle("is-neutral-inspection", inspection === "neutral" || inspection === "source");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (inspectorRef.current) inspectorRef.current.hidden = !new URLSearchParams(window.location.search).has("cinematicDebug") || reduced.matches || window.innerWidth < 768;
-    if (reduced.matches) return;
+    if (reduced.matches && s01Value === null) return;
     let disposed = false;
     let idleId = 0;
     let timerId: ReturnType<typeof setTimeout> | undefined;
@@ -155,7 +218,10 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
       try {
         const { createCinematicScene } = await import("@/lib/glacier/cinematic-scene");
         if (disposed) return;
-        const controller = await createCinematicScene(canvas, ghostWords, inspection);
+        const controller = await createCinematicScene(canvas, ghostWords, inspection, s01Look, {
+          atmosphere: s01Atmosphere,
+          backgroundOnly: s01BackgroundOnly,
+        });
         if (disposed) { controller.dispose(); return; }
         controllerRef.current = controller;
         controller.setProgress(progressRef.current);
@@ -228,8 +294,28 @@ export function GlacialCinematicStage({ children, label, skipLabel, scrollLabel,
       <div className="cinematic-graphic-bands" aria-hidden="true" />
       <div className="cinematic-pixel-field" aria-hidden="true" />
       <div className="awakening-dither cinematic-dither" aria-hidden="true" />
+      {process.env.NODE_ENV === "development" && <div className="s01-stripe-guide" aria-hidden="true"><span>INDUSTRIAL STRIPE BAND · BEHIND CHARACTER</span></div>}
       <div className="awakening-render cinematic-render" aria-hidden="true"><canvas ref={canvasRef} /></div>
       {children}
+      {process.env.NODE_ENV === "development" && (
+        <div className="s01-preview-identity">
+          <p className="s01-preview-label">{previewIdentity.label}</p>
+          <p className="s01-preview-name">{previewIdentity.name}</p>
+          <p className="s01-preview-career">{previewIdentity.career}</p>
+        </div>
+      )}
+      {process.env.NODE_ENV === "development" && (
+        <div className="s01-composition-guides" aria-hidden="true">
+          <span className="s01-guide s01-guide-nav">PORTFOLIO NAVIGATION</span>
+          <span className="s01-guide s01-guide-identity">PORTFOLIO · LUONG KHUONG DUY · CAREER · SCROLL</span>
+          <span className="s01-guide s01-guide-hud-upper-left">SYSTEM INITIALIZATION</span>
+          <span className="s01-guide s01-guide-hud-upper-right">SIGNAL / STATUS</span>
+          <span className="s01-guide s01-guide-hud-middle-left">TECHNICAL GRAPHICS</span>
+          <span className="s01-guide s01-guide-hud-middle-right">UNIT IDENTIFIER</span>
+          <span className="s01-guide s01-guide-hud-lower-left">SECONDARY INFO</span>
+          <span className="s01-guide s01-guide-hud-lower-right">SECONDARY INFO</span>
+        </div>
+      )}
       <a className="cinematic-skip" href="#about" onClick={skip}>{skipLabel}<span aria-hidden="true">↘</span></a>
       <div className="cinematic-scroll-cue" aria-hidden="true">{scrollLabel}<span>↓</span></div>
       {process.env.NODE_ENV === "development" && (
